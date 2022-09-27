@@ -17,7 +17,7 @@ class MainViewModel @Inject constructor(
 
     private val disposables = CompositeDisposable()
 
-    private val _hasBeenLaunched = MutableLiveData(false)
+    private val _hasBeenLaunched = MutableLiveData<Boolean>()
     val hasBeenLaunched get() = _hasBeenLaunched
     fun getHasBeenLaunched() {
         disposables.add(

@@ -1,8 +1,6 @@
 package com.ardnn.carita.data.main.repository.source.local
 
 import android.content.Context
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.rxjava2.RxDataStore
 import javax.inject.Inject
 
 class MainPreference @Inject constructor(context: Context) {

@@ -1,7 +1,6 @@
 package com.ardnn.carita
 
 import android.app.Application
-import androidx.viewbinding.BuildConfig
 import com.ardnn.carita.ui.di.ApplicationComponent
 import com.ardnn.carita.ui.di.DaggerApplicationComponent
 import timber.log.Timber
