@@ -13,5 +13,8 @@
     <color name="gray">#7D6E83</color>
     <color name="gray_text">#607B87</color>
 
+    <color name="navy_light">#1D2731</color>
     <color name="navy">#2D3D4F</color>
+    <color name="navy_dark">#0F161E</color>
+
 </resources>
