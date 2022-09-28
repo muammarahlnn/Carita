@@ -11,4 +11,8 @@
     <string name="login">Login</string>
     <string name="new_to_carita">New to Carita?</string>
     <string name="register">Register</string>
+    <string name="title_sign_up_page">Sign up</string>
+    <string name="name">Name</string>
+    <string name="_continue">Continue</string>
+    <string name="joined_us_before">Joined us before?</string>
 </resources>
