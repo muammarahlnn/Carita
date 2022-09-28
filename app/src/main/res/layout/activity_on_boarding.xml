@@ -12,12 +12,13 @@
         android:id="@+id/iv_carita"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:src="@drawable/ic_logo_carita"
+        android:src="@drawable/ic_logo_carita_nassa"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="@id/gl_ver_end"
         app:layout_constraintStart_toStartOf="@id/gl_ver_start"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/desc_iv_logo_carita" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/iv_menu_1"
