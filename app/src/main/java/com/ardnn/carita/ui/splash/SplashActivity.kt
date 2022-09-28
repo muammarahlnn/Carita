@@ -9,6 +9,7 @@ import android.os.Looper
 import com.ardnn.carita.R
 import com.ardnn.carita.ui.login.LoginActivity
 import com.ardnn.carita.ui.main.MainActivity
+import com.ardnn.carita.ui.onboarding.OnBoardingActivity
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
@@ -18,7 +19,7 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         Handler(Looper.getMainLooper()).postDelayed({
-            startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
+            startActivity(Intent(this@SplashActivity, OnBoardingActivity::class.java))
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
             finish()
         }, 1000)
