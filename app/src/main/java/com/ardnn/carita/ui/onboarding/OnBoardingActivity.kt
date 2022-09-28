@@ -1,20 +1,29 @@
 package com.ardnn.carita.ui.onboarding
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
-import com.ardnn.carita.R
+import androidx.appcompat.app.AppCompatActivity
+import com.ardnn.carita.databinding.ActivityOnBoardingBinding
+import com.ardnn.carita.ui.login.LoginActivity
 
 class OnBoardingActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityOnBoardingBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_on_boarding)
+        binding = ActivityOnBoardingBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        /*
-        on boarding page
-        1. create your story
-        2. share your story
-        3. see others story
-         */
+        setupAction()
+    }
+
+    private fun setupAction() {
+        binding.btnStart.setOnClickListener {
+            // to login page
+            val toLogin = Intent(this, LoginActivity::class.java)
+            startActivity(toLogin)
+            finish()
+        }
     }
 }
