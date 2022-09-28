@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Carita</string>
     <string name="desc_iv_logo_carita">Logo Carita</string>
+    <string name="title_menu_1">Create your stories</string>
+    <string name="title_menu_2">Share your stories</string>
+    <string name="title_menu_3">See others stories</string>
+    <string name="starts_now">Starts Now</string>
 </resources>
