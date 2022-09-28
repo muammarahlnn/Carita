@@ -1,12 +1,25 @@
 package com.ardnn.carita.ui.signup
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.ardnn.carita.R
+import androidx.appcompat.app.AppCompatActivity
+import com.ardnn.carita.databinding.ActivitySignUpBinding
 
 class SignUpActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivitySignUpBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_up)
+        binding = ActivitySignUpBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        setupAction()
+    }
+
+    private fun setupAction() {
+        binding.tvLogin.setOnClickListener {
+            // back to login
+            finish()
+        }
     }
 }
