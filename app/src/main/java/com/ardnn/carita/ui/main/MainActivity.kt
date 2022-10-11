@@ -35,13 +35,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
+        // call necessary use cases
         viewModel.getHasBeenLaunched()
+
+        // subscribe
         subscribeViewModel()
     }
 
     private fun subscribeViewModel() {
         viewModel.hasBeenLaunched.observe(this) { hasBeenLaunched ->
-            Timber.d("Has been launched -> $hasBeenLaunched")
             if (!hasBeenLaunched) {
                 viewModel.saveHasBeenLaunched()
                 startActivity(Intent(this, OnBoardingActivity::class.java))

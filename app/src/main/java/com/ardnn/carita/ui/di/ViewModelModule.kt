@@ -2,7 +2,9 @@ package com.ardnn.carita.ui.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.ardnn.carita.ui.login.LoginViewModel
 import com.ardnn.carita.ui.main.MainViewModel
+import com.ardnn.carita.ui.signup.SignUpViewModel
 import com.ardnn.carita.ui.util.ViewModelFactory
 import dagger.Binds
 import dagger.Module
@@ -19,4 +21,14 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(MainViewModel::class)
     abstract fun bindMainViewModel(viewModel: MainViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SignUpViewModel::class)
+    abstract fun bindSignUpViewModel(viewModel: SignUpViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(LoginViewModel::class)
+    abstract fun bindLoginViewModel(viewModel: LoginViewModel): ViewModel
 }

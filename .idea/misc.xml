@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/coding/github/Carita/app/src/main/res/drawable/bg_et_active.xml" value="0.231" />
+        <entry key="..\:/coding/github/Carita/app/src/main/res/drawable/bg_et_normal.xml" value="0.231" />
+        <entry key="..\:/coding/github/Carita/app/src/main/res/drawable/bg_et_password.xml" value="0.231" />
         <entry key="..\:/coding/github/Carita/app/src/main/res/drawable/ic_baseline_email.xml" value="0.2625" />
         <entry key="..\:/coding/github/Carita/app/src/main/res/drawable/ic_baseline_lock.xml" value="0.2625" />
         <entry key="..\:/coding/github/Carita/app/src/main/res/drawable/ic_circle.xml" value="0.2625" />
@@ -10,7 +13,7 @@
         <entry key="..\:/coding/github/Carita/app/src/main/res/drawable/ic_person.xml" value="0.231" />
         <entry key="..\:/coding/github/Carita/app/src/main/res/layout/activity_login.xml" value="0.4" />
         <entry key="..\:/coding/github/Carita/app/src/main/res/layout/activity_on_boarding.xml" value="0.264" />
-        <entry key="..\:/coding/github/Carita/app/src/main/res/layout/activity_sign_up.xml" value="0.259375" />
+        <entry key="..\:/coding/github/Carita/app/src/main/res/layout/activity_sign_up.xml" value="0.2511737089201878" />
         <entry key="..\:/coding/github/Carita/app/src/main/res/layout/activity_splash.xml" value="0.264" />
       </map>
     </option>

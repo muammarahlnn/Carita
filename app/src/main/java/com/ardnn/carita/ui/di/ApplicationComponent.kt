@@ -2,7 +2,10 @@ package com.ardnn.carita.ui.di
 
 import android.content.Context
 import com.ardnn.carita.data.di.LocalModule
+import com.ardnn.carita.data.di.RemoteModule
+import com.ardnn.carita.ui.login.LoginActivity
 import com.ardnn.carita.ui.main.MainActivity
+import com.ardnn.carita.ui.signup.SignUpActivity
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -12,7 +15,8 @@ import javax.inject.Singleton
 @Component(modules = [
     ApplicationModule::class,
     ViewModelModule::class,
-    LocalModule::class
+    LocalModule::class,
+    RemoteModule::class
 ])
 interface ApplicationComponent {
 
@@ -22,4 +26,8 @@ interface ApplicationComponent {
     }
 
     fun inject(activity: MainActivity)
+
+    fun inject(activity: SignUpActivity)
+
+    fun inject(activity: LoginActivity)
 }
