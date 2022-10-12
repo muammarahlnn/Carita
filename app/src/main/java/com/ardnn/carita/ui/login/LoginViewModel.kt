@@ -17,8 +17,8 @@ class LoginViewModel @Inject constructor(
 
     private val disposables = CompositeDisposable()
 
-    private val _snackbarMessage = MutableLiveData<Event<String>>()
-    val snackbarMessage get() = _snackbarMessage
+    private val _responseMessage = MutableLiveData<Event<String>>()
+    val responseMessage get() = _responseMessage
     fun postLogin(request: LoginRequest) {
         disposables.add(
             postLoginUseCase.execute(request)
@@ -26,10 +26,10 @@ class LoginViewModel @Inject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { loginResponse ->
-                        _snackbarMessage.value = Event(loginResponse.message.toString())
+                        _responseMessage.value = Event(loginResponse.message.toString())
                     },
                     {
-                        _snackbarMessage.value = Event(it.message.toString())
+                        _responseMessage.value = Event(it.message.toString())
                         Timber.e(it.message)
                     }
                 )

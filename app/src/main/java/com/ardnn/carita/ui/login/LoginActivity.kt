@@ -13,6 +13,7 @@ import com.ardnn.carita.databinding.ActivityLoginBinding
 import com.ardnn.carita.ui.signup.SignUpActivity
 import com.ardnn.carita.ui.util.ViewModelFactory
 import com.ardnn.carita.ui.util.showSnackbar
+import com.ardnn.carita.ui.util.showToast
 import com.jakewharton.rxbinding2.widget.RxTextView
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
@@ -53,9 +54,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
-        viewModel.snackbarMessage.observe(this) { event ->
+        viewModel.responseMessage.observe(this) { event ->
             event.getContentIfNotHandled()?.let { message ->
-                showSnackbar(this, message)
+                showToast(this, message)
             }
         }
     }

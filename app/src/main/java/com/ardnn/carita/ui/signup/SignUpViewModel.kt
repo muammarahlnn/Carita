@@ -18,8 +18,8 @@ class SignUpViewModel @Inject constructor(
 
     private val disposables = CompositeDisposable()
 
-    private val _snackbarMessage = MutableLiveData<Event<String>>()
-    val snackbarMessage: LiveData<Event<String>> = _snackbarMessage
+    private val _responseMessage = MutableLiveData<Event<String>>()
+    val responseMessage: LiveData<Event<String>> = _responseMessage
     fun postRegister(request: RegisterRequest) {
         disposables.add(
             postRegisterUseCase.execute(request)
@@ -27,10 +27,10 @@ class SignUpViewModel @Inject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { registerResponse ->
-                        _snackbarMessage.value = Event(registerResponse.message.toString())
+                        _responseMessage.value = Event(registerResponse.message.toString())
                     },
                     {
-                        _snackbarMessage.value = Event(it.message.toString())
+                        _responseMessage.value = Event(it.message.toString())
                         Timber.e(it.message)
                     }
                 )

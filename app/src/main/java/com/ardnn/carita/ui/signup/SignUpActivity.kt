@@ -56,9 +56,9 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
-        viewModel.snackbarMessage.observe(this) { event ->
+        viewModel.responseMessage.observe(this) { event ->
             event.getContentIfNotHandled()?.let { message ->
-                showSnackbar(this, message)
+                showToast(this, message)
             }
         }
     }
