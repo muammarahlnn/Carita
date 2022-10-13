@@ -27,7 +27,11 @@ class SignUpViewModel @Inject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { registerResponse ->
-                        _responseMessage.value = Event(registerResponse.message.toString())
+                        _responseMessage.value =  if (registerResponse.error as Boolean) {
+                            Event("User created successfully")
+                        } else {
+                            Event(registerResponse.message.toString())
+                        }
                     },
                     {
                         _responseMessage.value = Event(it.message.toString())
