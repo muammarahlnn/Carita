@@ -1,7 +1,6 @@
 package com.ardnn.carita.ui.signup
 
 import android.os.Bundle
-import android.util.Patterns
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -120,11 +119,6 @@ class SignUpActivity : AppCompatActivity() {
             .map { name ->
                 name.length < 3
             }
-        val emailValidation = RxTextView.textChanges(binding.etEmail)
-            .skipInitialValue()
-            .map { email ->
-                !Patterns.EMAIL_ADDRESS.matcher(email).matches()
-            }
         // the checking to show error in editText is still in CustomView
         val passwordValidation = RxTextView.textChanges(binding.etPassword)
             .map { password ->
@@ -132,21 +126,15 @@ class SignUpActivity : AppCompatActivity() {
             }
         val formValidation = combineLatest(
             nameValidation,
-            emailValidation,
             passwordValidation
-        ) { nameInvalid, emailInvalid, passwordInvalid ->
-            !nameInvalid && !emailInvalid && !passwordInvalid
+        ) { nameInvalid, passwordInvalid ->
+            !nameInvalid && !passwordInvalid
         }
 
         disposables.addAll(
             nameValidation.subscribe { isNotValid ->
                 if (isNotValid) {
                     binding.etName.error = getString(R.string.name_not_valid)
-                }
-            },
-            emailValidation.subscribe { isNotValid ->
-                if (isNotValid) {
-                    binding.etEmail.error = getString(R.string.email_not_valid)
                 }
             },
             passwordValidation.subscribe(),
