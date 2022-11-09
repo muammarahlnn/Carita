@@ -1,7 +1,6 @@
 package com.ardnn.carita.data.addstory.repository.source.remote
 
 import com.ardnn.carita.data.addstory.repository.source.AddStoryDataSource
-import com.ardnn.carita.data.addstory.repository.source.remote.request.AddStoryRequest
 import com.ardnn.carita.data.addstory.repository.source.remote.response.AddStoryResponse
 import com.ardnn.carita.data.main.repository.source.remote.StoryDicodingApi
 import io.reactivex.Observable

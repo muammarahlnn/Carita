@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ardnn.carita.data.main.interactor.*
 import com.ardnn.carita.data.main.repository.source.local.model.User
-import com.ardnn.carita.data.main.repository.source.remote.response.StoriesResponse
 import com.ardnn.carita.data.main.repository.source.remote.response.StoryResponse
 import com.ardnn.carita.vo.Status
 import io.reactivex.android.schedulers.AndroidSchedulers

@@ -1,6 +1,5 @@
 package com.ardnn.carita.data.main.repository.source.remote
 
-import com.ardnn.carita.data.addstory.repository.source.remote.request.AddStoryRequest
 import com.ardnn.carita.data.addstory.repository.source.remote.response.AddStoryResponse
 import com.ardnn.carita.data.login.repository.source.remote.request.LoginRequest
 import com.ardnn.carita.data.login.repository.source.remote.response.LoginResponse

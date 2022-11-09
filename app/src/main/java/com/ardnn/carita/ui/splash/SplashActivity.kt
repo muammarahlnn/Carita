@@ -2,14 +2,12 @@ package com.ardnn.carita.ui.splash
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import androidx.appcompat.app.AppCompatActivity
 import com.ardnn.carita.R
-import com.ardnn.carita.ui.login.LoginActivity
 import com.ardnn.carita.ui.main.MainActivity
-import com.ardnn.carita.ui.onboarding.OnBoardingActivity
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {

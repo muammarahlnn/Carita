@@ -3,7 +3,6 @@ package com.ardnn.carita.data.main.repository.source.local
 import com.ardnn.carita.data.main.repository.source.MainDataSource
 import com.ardnn.carita.data.main.repository.source.local.model.User
 import com.ardnn.carita.data.main.repository.source.remote.response.StoriesResponse
-import io.reactivex.Completable
 import io.reactivex.Observable
 import javax.inject.Inject
 

@@ -12,7 +12,7 @@ class MainPreference @Inject constructor(context: Context) {
         preferences.getBoolean(HAS_BEEN_LAUNCHED, false)
 
     fun saveHasBeenLaunched() {
-        preferences.edit().apply() {
+        preferences.edit().apply {
             putBoolean(HAS_BEEN_LAUNCHED, true)
             apply()
         }

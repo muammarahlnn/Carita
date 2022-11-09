@@ -1,10 +1,8 @@
 package com.ardnn.carita.ui.detail
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
-import com.ardnn.carita.R
+import androidx.appcompat.app.AppCompatActivity
 import com.ardnn.carita.data.main.repository.source.remote.response.StoryResponse
 import com.ardnn.carita.databinding.ActivityDetailBinding
 import com.ardnn.carita.ui.util.loadImage

@@ -1,25 +1,23 @@
 package com.ardnn.carita.ui.main
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ardnn.carita.CaritaApplication
 import com.ardnn.carita.R
 import com.ardnn.carita.data.main.repository.source.local.model.User
-import com.ardnn.carita.data.main.repository.source.remote.response.StoryResponse
 import com.ardnn.carita.databinding.ActivityMainBinding
 import com.ardnn.carita.ui.addstory.AddStoryFragment
 import com.ardnn.carita.ui.detail.DetailActivity
 import com.ardnn.carita.ui.login.LoginActivity
 import com.ardnn.carita.ui.onboarding.OnBoardingActivity
 import com.ardnn.carita.ui.util.ViewModelFactory
-import com.ardnn.carita.ui.util.showToast
 import com.ardnn.carita.vo.Status
 import timber.log.Timber
 import javax.inject.Inject

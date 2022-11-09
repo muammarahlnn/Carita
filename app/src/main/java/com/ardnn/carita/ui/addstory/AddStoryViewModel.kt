@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ardnn.carita.data.addstory.interactor.PostStoryUseCase
-import com.ardnn.carita.data.addstory.repository.source.remote.request.AddStoryRequest
 import com.ardnn.carita.data.addstory.repository.source.remote.response.AddStoryResponse
 import com.ardnn.carita.vo.Status
 import io.reactivex.android.schedulers.AndroidSchedulers

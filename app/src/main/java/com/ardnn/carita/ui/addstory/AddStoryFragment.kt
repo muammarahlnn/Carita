@@ -15,13 +15,9 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.PackageManagerCompat
 import androidx.fragment.app.viewModels
 import com.ardnn.carita.CaritaApplication
-import com.ardnn.carita.R
-import com.ardnn.carita.data.addstory.repository.source.remote.request.AddStoryRequest
 import com.ardnn.carita.databinding.FragmentAddStoryBinding
-import com.ardnn.carita.ui.main.MainActivity
 import com.ardnn.carita.ui.util.*
 import com.ardnn.carita.vo.Status
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
