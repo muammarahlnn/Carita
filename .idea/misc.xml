@@ -3,18 +3,42 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/coding/github/Carita/app/src/main/res/drawable-v24/ic_switch_camera.xml" value="0.251" />
+        <entry key="..\:/coding/github/Carita/app/src/main/res/drawable/bg_bottom_sheet.xml" value="0.253" />
         <entry key="..\:/coding/github/Carita/app/src/main/res/drawable/bg_et_active.xml" value="0.231" />
         <entry key="..\:/coding/github/Carita/app/src/main/res/drawable/bg_et_normal.xml" value="0.231" />
         <entry key="..\:/coding/github/Carita/app/src/main/res/drawable/bg_et_password.xml" value="0.231" />
+        <entry key="..\:/coding/github/Carita/app/src/main/res/drawable/bg_image_add_story.xml" value="0.233" />
+        <entry key="..\:/coding/github/Carita/app/src/main/res/drawable/ic_add.xml" value="0.232" />
         <entry key="..\:/coding/github/Carita/app/src/main/res/drawable/ic_baseline_email.xml" value="0.2625" />
         <entry key="..\:/coding/github/Carita/app/src/main/res/drawable/ic_baseline_lock.xml" value="0.2625" />
+        <entry key="..\:/coding/github/Carita/app/src/main/res/drawable/ic_camera.xml" value="0.233" />
         <entry key="..\:/coding/github/Carita/app/src/main/res/drawable/ic_circle.xml" value="0.2625" />
         <entry key="..\:/coding/github/Carita/app/src/main/res/drawable/ic_circle_full.xml" value="0.2625" />
+        <entry key="..\:/coding/github/Carita/app/src/main/res/drawable/ic_close.xml" value="0.253" />
+        <entry key="..\:/coding/github/Carita/app/src/main/res/drawable/ic_image.xml" value="0.242" />
         <entry key="..\:/coding/github/Carita/app/src/main/res/drawable/ic_person.xml" value="0.231" />
+        <entry key="..\:/coding/github/Carita/app/src/main/res/drawable/ic_photo_placeholder.xml" value="0.242" />
+        <entry key="..\:/coding/github/Carita/app/src/main/res/drawable/ic_switch_camera.xml" value="0.251" />
+        <entry key="..\:/coding/github/Carita/app/src/main/res/layout/activity_add_story.xml" value="0.264" />
+        <entry key="..\:/coding/github/Carita/app/src/main/res/layout/activity_add_story_temp.xml" value="0.264" />
+        <entry key="..\:/coding/github/Carita/app/src/main/res/layout/activity_camera.xml" value="0.259375" />
+        <entry key="..\:/coding/github/Carita/app/src/main/res/layout/activity_detail.xml" value="0.264" />
+        <entry key="..\:/coding/github/Carita/app/src/main/res/layout/activity_detail_temp.xml" value="0.25833333333333336" />
         <entry key="..\:/coding/github/Carita/app/src/main/res/layout/activity_login.xml" value="0.4" />
+        <entry key="..\:/coding/github/Carita/app/src/main/res/layout/activity_main.xml" value="0.2903790087463557" />
         <entry key="..\:/coding/github/Carita/app/src/main/res/layout/activity_on_boarding.xml" value="0.264" />
         <entry key="..\:/coding/github/Carita/app/src/main/res/layout/activity_sign_up.xml" value="0.2511737089201878" />
         <entry key="..\:/coding/github/Carita/app/src/main/res/layout/activity_splash.xml" value="0.264" />
+        <entry key="..\:/coding/github/Carita/app/src/main/res/layout/fragment_add_story.xml" value="0.36348408710217756" />
+        <entry key="..\:/coding/github/Carita/app/src/main/res/layout/fragment_item_list_dialog_list_dialog.xml" value="0.259375" />
+        <entry key="..\:/coding/github/Carita/app/src/main/res/layout/fragment_item_list_dialog_list_dialog_item.xml" value="0.259375" />
+        <entry key="..\:/coding/github/Carita/app/src/main/res/layout/item_story.xml" value="0.264" />
+        <entry key="..\:/coding/github/Carita/app/src/main/res/layout/layout_loading.xml" value="0.259375" />
+        <entry key="..\:/coding/github/Carita/app/src/main/res/layout/toolbar_basic.xml" value="0.25833333333333336" />
+        <entry key="..\:/coding/github/Carita/app/src/main/res/layout/toolbar_main.xml" value="0.264" />
+        <entry key="..\:/coding/github/Carita/app/src/main/res/layout/view_loading.xml" value="0.259375" />
+        <entry key="..\:/coding/github/Carita/app/src/main/res/menu/menu_toolbar_main.xml" value="0.264" />
       </map>
     </option>
   </component>

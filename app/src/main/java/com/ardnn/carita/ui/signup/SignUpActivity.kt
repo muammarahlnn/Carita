@@ -2,23 +2,21 @@ package com.ardnn.carita.ui.signup
 
 import android.os.Bundle
 import android.util.Patterns
-import android.widget.EditText
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.ardnn.carita.CaritaApplication
 import com.ardnn.carita.R
 import com.ardnn.carita.data.signup.repository.source.remote.request.RegisterRequest
+import com.ardnn.carita.data.signup.repository.source.remote.response.RegisterResponse
 import com.ardnn.carita.databinding.ActivitySignUpBinding
 import com.ardnn.carita.ui.util.ViewModelFactory
-import com.ardnn.carita.ui.util.showSnackbar
 import com.ardnn.carita.ui.util.showToast
+import com.ardnn.carita.vo.Status
 import com.jakewharton.rxbinding2.widget.RxTextView
-import io.reactivex.Observable
-import io.reactivex.Observable.*
+import io.reactivex.Observable.combineLatest
 import io.reactivex.disposables.CompositeDisposable
-import timber.log.Timber
-import java.util.*
 import javax.inject.Inject
 
 class SignUpActivity : AppCompatActivity() {
@@ -56,10 +54,43 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
-        viewModel.responseMessage.observe(this) { event ->
-            event.getContentIfNotHandled()?.let { message ->
+        viewModel.response.observe(this) { statusResponse ->
+            processResponse(statusResponse)
+        }
+        viewModel.message.observe(this) { eventMessage ->
+            eventMessage.getContentIfNotHandled()?.let { message ->
                 showToast(this, message)
             }
+        }
+    }
+
+    private fun processResponse(statusResponse: Status<RegisterResponse>) {
+        when (statusResponse) {
+            is Status.Success -> {
+                finish()
+            }
+
+            is Status.Error -> {
+                hideLoading()
+            }
+
+            is Status.Loading -> {
+                showLoading()
+            }
+        }
+    }
+
+    private fun showLoading() {
+        with(binding) {
+            loading.root.visibility = View.VISIBLE
+            btnContinue.isEnabled = false
+        }
+    }
+
+    private fun hideLoading() {
+        with(binding) {
+            loading.root.visibility = View.INVISIBLE
+            btnContinue.isEnabled = true
         }
     }
 

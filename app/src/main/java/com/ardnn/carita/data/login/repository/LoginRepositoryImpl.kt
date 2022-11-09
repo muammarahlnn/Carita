@@ -4,6 +4,7 @@ import com.ardnn.carita.data.login.repository.source.LoginDataFactory
 import com.ardnn.carita.data.login.repository.source.LoginDataSource
 import com.ardnn.carita.data.login.repository.source.remote.request.LoginRequest
 import com.ardnn.carita.data.login.repository.source.remote.response.LoginResponse
+import com.ardnn.carita.data.main.repository.source.local.model.User
 import com.ardnn.carita.data.util.Source
 import io.reactivex.Observable
 import javax.inject.Inject
@@ -12,9 +13,17 @@ class LoginRepositoryImpl @Inject constructor(
     private val loginDataFactory: LoginDataFactory
 ) : LoginRepository {
 
-    override fun postLogin(request: LoginRequest): Observable<LoginResponse> =
-        createRemoteLoginDataSource().postLogin(request)
+    private val localLoginDataSource: LoginDataSource by lazy {
+        loginDataFactory.createData(Source.LOCAL)
+    }
 
-    private fun createRemoteLoginDataSource(): LoginDataSource =
+    private val remoteLoginDataSource: LoginDataSource by lazy {
         loginDataFactory.createData(Source.REMOTE)
+    }
+
+    override fun postLogin(request: LoginRequest): Observable<LoginResponse> =
+        remoteLoginDataSource.postLogin(request)
+
+    override fun saveUser(user: User): Observable<Unit> =
+        localLoginDataSource.saveUser(user)
 }

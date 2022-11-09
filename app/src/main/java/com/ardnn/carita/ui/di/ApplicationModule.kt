@@ -1,5 +1,7 @@
 package com.ardnn.carita.ui.di
 
+import com.ardnn.carita.data.addstory.repository.AddStoryRepository
+import com.ardnn.carita.data.addstory.repository.AddStoryRepositoryImpl
 import com.ardnn.carita.data.login.repository.LoginRepository
 import com.ardnn.carita.data.login.repository.LoginRepositoryImpl
 import com.ardnn.carita.data.main.repository.MainRepository
@@ -24,4 +26,8 @@ abstract class ApplicationModule {
     @Binds
     @Singleton
     abstract fun provideLoginRepository(loginRepository: LoginRepositoryImpl): LoginRepository
+
+    @Binds
+    @Singleton
+    abstract fun provideAddStoryRepository(addStoryRepository: AddStoryRepositoryImpl): AddStoryRepository
 }

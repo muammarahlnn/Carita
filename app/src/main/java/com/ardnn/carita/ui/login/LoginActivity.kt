@@ -3,17 +3,21 @@ package com.ardnn.carita.ui.login
 import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.ardnn.carita.CaritaApplication
 import com.ardnn.carita.R
 import com.ardnn.carita.data.login.repository.source.remote.request.LoginRequest
+import com.ardnn.carita.data.login.repository.source.remote.response.LoginResponse
+import com.ardnn.carita.data.main.repository.source.local.model.User
 import com.ardnn.carita.databinding.ActivityLoginBinding
+import com.ardnn.carita.ui.main.MainActivity
 import com.ardnn.carita.ui.signup.SignUpActivity
 import com.ardnn.carita.ui.util.ViewModelFactory
-import com.ardnn.carita.ui.util.showSnackbar
 import com.ardnn.carita.ui.util.showToast
+import com.ardnn.carita.vo.Status
 import com.jakewharton.rxbinding2.widget.RxTextView
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
@@ -54,11 +58,71 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
-        viewModel.responseMessage.observe(this) { event ->
-            event.getContentIfNotHandled()?.let { message ->
+        viewModel.response.observe(this) { statusResponse ->
+            processResponse(statusResponse)
+        }
+        viewModel.message.observe(this) { eventMessage ->
+            eventMessage.getContentIfNotHandled()?.let { message ->
                 showToast(this, message)
             }
         }
+        viewModel.isUserSuccessfullySaved.observe(this) { success ->
+            if (success) {
+                // to main
+                val toMain = Intent(this, MainActivity::class.java)
+                startActivity(toMain)
+                finishAffinity()
+            } else {
+                showError()
+            }
+        }
+    }
+
+    private fun processResponse(statusResponse: Status<LoginResponse>) {
+        when (statusResponse) {
+            is Status.Success -> {
+                hideLoading()
+                statusResponse.data?.let {
+                    saveUserToLocal(it)
+                }
+            }
+            is Status.Error -> {
+                hideLoading()
+            }
+
+            is Status.Loading -> {
+                showLoading()
+            }
+        }
+    }
+
+    private fun saveUserToLocal(loginResponse: LoginResponse) {
+        loginResponse.loginResult?.let {
+            val user = User(
+                it.userId.orEmpty(),
+                it.name.orEmpty(),
+                it.token.orEmpty()
+            )
+            viewModel.saveUser(user)
+        }
+    }
+
+    private fun showLoading() {
+        with(binding) {
+            loading.root.visibility = View.VISIBLE
+            btnLogin.isEnabled = false
+        }
+    }
+
+    private fun hideLoading() {
+        with(binding) {
+            loading.root.visibility = View.INVISIBLE
+            btnLogin.isEnabled = true
+        }
+    }
+
+    private fun showError() {
+        showToast(this, "An error occurred")
     }
 
     private fun setupAction() {

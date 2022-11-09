@@ -3,6 +3,7 @@ package com.ardnn.carita.ui.di
 import android.content.Context
 import com.ardnn.carita.data.di.LocalModule
 import com.ardnn.carita.data.di.RemoteModule
+import com.ardnn.carita.ui.addstory.AddStoryFragment
 import com.ardnn.carita.ui.login.LoginActivity
 import com.ardnn.carita.ui.main.MainActivity
 import com.ardnn.carita.ui.signup.SignUpActivity
@@ -30,4 +31,6 @@ interface ApplicationComponent {
     fun inject(activity: SignUpActivity)
 
     fun inject(activity: LoginActivity)
+
+    fun inject(fragment: AddStoryFragment)
 }

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Carita</string>
     <string name="desc_iv_logo_carita">Logo Carita</string>
+    <string name="desc_iv_story_photo">Story image</string>
     <string name="title_menu_1">Create your stories</string>
     <string name="title_menu_2">Share your stories</string>
     <string name="title_menu_3">See others stories</string>
@@ -17,5 +18,21 @@
     <string name="joined_us_before">Joined us before?</string>
 
     <string name="email_not_valid">Email format is not valid!</string>
+    <string name="password_not_valid">Password must be at least six characters</string>
     <string name="name_not_valid">Name must be at least 3 characters!</string>
+    <string name="desc_fab_add_story">Button add story</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="add_story">Add Story</string>
+    <string name="desc_btn_close">Button close</string>
+    <string name="caption_story_hint">Write a caption…</string>
+    <string name="upload">Upload</string>
+    <string name="desc_btn_add_image_camera">Button add image from camera</string>
+    <string name="desc_btn_add_image_gallery">Button add image from gallery</string>
+    <string name="desc_btn_capture_image">Button capture photo</string>
+    <string name="desc_btn_switch_camera">Button switch camera</string>
+    <string name="default_desc_photo">This is a description</string>
+    <string name="error_connection">Please check your internet connection.</string>
+    <string name="language">Language</string>
+    <string name="logout">Logout</string>
 </resources>

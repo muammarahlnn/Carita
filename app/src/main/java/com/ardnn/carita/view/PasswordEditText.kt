@@ -12,7 +12,7 @@ import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import com.ardnn.carita.R
 
-class PasswordEditText : AppCompatEditText {
+class PasswordEditText : CustomEditText {
 
     constructor(context: Context) : super(context) {
         init()
@@ -30,28 +30,18 @@ class PasswordEditText : AppCompatEditText {
         init()
     }
 
-    private fun init() {
-        inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-        compoundDrawablePadding = 16
+    override fun getLeftIcon(): Drawable =
+        ContextCompat.getDrawable(context, R.drawable.ic_lock) as Drawable
 
-        val passwordIcon = ContextCompat.getDrawable(context, R.drawable.ic_lock) as Drawable
-        setCompoundDrawablesWithIntrinsicBounds(passwordIcon, null, null, null)
 
-        addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                // no implementation
-            }
+    override fun getTypeInput(): Int =
+        InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
 
-            override fun onTextChanged(input: CharSequence, p1: Int, p2: Int, p3: Int) {
-                if (input.length in 1..5) {
-                    error = "Password must be at least six characters"
-                }
-            }
 
-            override fun afterTextChanged(p0: Editable?) {
-                // no implementation
-            }
-        })
+    override fun errorCondition(input: CharSequence) {
+        if (input.length in 1..5) {
+            error = context.getString(R.string.password_not_valid)
+        }
     }
 
     override fun onDraw(canvas: Canvas?) {

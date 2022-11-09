@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Carita</string>
+    <string name="desc_iv_logo_carita">Logo Carita</string>
+    <string name="desc_iv_story_photo">Story image</string>
+    <string name="title_menu_1">Buat ceritamu</string>
+    <string name="title_menu_2">Bagikan ceritamu</string>
+    <string name="title_menu_3">Lihat cerita pengguna lain</string>
+    <string name="starts_now">Mulai sekarang</string>
+    <string name="title_login_page">Masuk</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Masuk</string>
+    <string name="new_to_carita">Baru di Carita?</string>
+    <string name="register">Daftar</string>
+    <string name="title_sign_up_page">Daftar</string>
+    <string name="name">Nama</string>
+    <string name="_continue">Lanjutkan</string>
+    <string name="joined_us_before">Sudah gabung sebelumnya?</string>
+
+    <string name="email_not_valid">Format email tidak valid!</string>
+    <string name="password_not_valid">Password setidaknya enam karakter</string>
+    <string name="name_not_valid">Nama setidaknya tiga karakter</string>
+    <string name="desc_fab_add_story">Button add story</string>
+    <string name="camera">Kamera</string>
+    <string name="gallery">Galeri</string>
+    <string name="add_story">Tambah cerita</string>
+    <string name="desc_btn_close">Button close</string>
+    <string name="caption_story_hint">Tulis keterangan…</string>
+    <string name="upload">Unggah</string>
+    <string name="desc_btn_add_image_camera">Button add image from camera</string>
+    <string name="desc_btn_add_image_gallery">Button add image from gallery</string>
+    <string name="desc_btn_capture_image">Button capture photo</string>
+    <string name="desc_btn_switch_camera">Button switch camera</string>
+    <string name="default_desc_photo">Ini adalah deskripsi</string>
+    <string name="error_connection">Tolong cek koneksi internet Anda.</string>
+    <string name="language">Bahasa</string>
+    <string name="logout">Keluar</string>
+</resources>
