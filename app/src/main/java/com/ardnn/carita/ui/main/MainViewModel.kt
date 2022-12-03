@@ -95,9 +95,8 @@ class MainViewModel @Inject constructor(
         disposables.add(
             getStoriesUseCase.execute("Bearer $token")
                 .cachedIn(viewModelScope)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe {
+                    Timber.d("GOKS -> loading")
                     _stories.value = Status.Loading()
                 }
                 .subscribe(
