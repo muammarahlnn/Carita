@@ -96,16 +96,13 @@ class MainViewModel @Inject constructor(
             getStoriesUseCase.execute("Bearer $token")
                 .cachedIn(viewModelScope)
                 .doOnSubscribe {
-                    Timber.d("GOKS -> loading")
                     _stories.value = Status.Loading()
                 }
                 .subscribe(
                     {
-                        Timber.d("GOKS -> success")
                         _stories.value = Status.Success(it)
                     },
                     {
-                        Timber.d("GOKS -> error")
                         _stories.value = Status.Error(it.message.toString())
                     }
                 )
