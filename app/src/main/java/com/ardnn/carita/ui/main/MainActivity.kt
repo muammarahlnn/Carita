@@ -117,7 +117,7 @@ class MainActivity : AppCompatActivity(), AddStoryFragment.OnSuccessPostStory {
             getStories()
         }
         viewModel.stories.observe(this) { statusStories ->
-            processStories(
+            processStatus(
                 statusStories,
                 {
                     val adapter = StoryAdapter { story ->
@@ -125,6 +125,13 @@ class MainActivity : AppCompatActivity(), AddStoryFragment.OnSuccessPostStory {
                             .putExtra(DetailActivity.EXTRA_STORY, story)
                         )
                     }.apply {
+                        addLoadStateListener { loadState ->
+                            when (loadState.source.refresh) {
+                                is LoadState.Loading -> showLoading()
+                                is LoadState.NotLoading -> hideLoading()
+                                is LoadState.Error -> showError()
+                            }
+                        }
                         statusStories.data?.let { data ->
                             submitData(lifecycle, data)
                         }
@@ -144,19 +151,19 @@ class MainActivity : AppCompatActivity(), AddStoryFragment.OnSuccessPostStory {
                     }
                 },
                 {
-                    binding.tvNoConnection.visibility = View.VISIBLE
+                    showError()
                 }
             )
         }
         viewModel.logoutStatus.observe(this) { status ->
-            processStories(status, onSuccess = {
+            processStatus(status, onSuccess = {
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             })
         }
     }
 
-    private fun processStories(
+    private fun processStatus(
         statusStories: Status<*>,
         onSuccess: () -> Unit,
         onError: () -> Unit = { }
@@ -180,7 +187,6 @@ class MainActivity : AppCompatActivity(), AddStoryFragment.OnSuccessPostStory {
 
     private fun logout() {
        viewModel.logout()
-
     }
 
     private fun getStories() {
@@ -193,6 +199,10 @@ class MainActivity : AppCompatActivity(), AddStoryFragment.OnSuccessPostStory {
 
     private fun hideLoading() {
         binding.loading.root.visibility = View.INVISIBLE
+    }
+
+    private fun showError() {
+        binding.tvNoConnection.visibility = View.VISIBLE
     }
 
     override fun onSuccess() {
