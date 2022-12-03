@@ -3,6 +3,9 @@ package com.ardnn.carita.ui.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.rxjava2.cachedIn
 import com.ardnn.carita.data.main.interactor.*
 import com.ardnn.carita.data.main.repository.source.local.model.User
 import com.ardnn.carita.data.main.repository.source.remote.response.StoryResponse
@@ -10,6 +13,7 @@ import com.ardnn.carita.vo.Status
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -84,25 +88,26 @@ class MainViewModel @Inject constructor(
         )
     }
 
-    private val _stories = MutableLiveData<Status<List<StoryResponse>>>()
-    val stories: LiveData<Status<List<StoryResponse>>> get() = _stories
+    private val _stories = MutableLiveData<Status<PagingData<StoryResponse>>>()
+    val stories: LiveData<Status<PagingData<StoryResponse>>> get() = _stories
+    @OptIn(ExperimentalCoroutinesApi::class)
     fun getStories(token: String) {
         disposables.add(
             getStoriesUseCase.execute("Bearer $token")
+                .cachedIn(viewModelScope)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe {
                     _stories.value = Status.Loading()
                 }
                 .subscribe(
-                    { storiesResponse ->
-                        _stories.value = Status.Success(
-                            storiesResponse.listStory ?: listOf()
-                        )
+                    {
+                        Timber.d("GOKS -> success")
+                        _stories.value = Status.Success(it)
                     },
                     {
+                        Timber.d("GOKS -> error")
                         _stories.value = Status.Error(it.message.toString())
-                        Timber.e(it.message.toString())
                     }
                 )
         )

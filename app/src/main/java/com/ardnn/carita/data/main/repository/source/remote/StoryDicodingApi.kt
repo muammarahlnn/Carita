@@ -7,6 +7,7 @@ import com.ardnn.carita.data.main.repository.source.remote.response.StoriesRespo
 import com.ardnn.carita.data.signup.repository.source.remote.request.RegisterRequest
 import com.ardnn.carita.data.signup.repository.source.remote.response.RegisterResponse
 import io.reactivex.Observable
+import io.reactivex.Single
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.*
@@ -25,8 +26,11 @@ interface StoryDicodingApi {
 
     @GET(STORIES)
     fun getStories(
-        @Header(AUTHORIZATION) token: String
-    ): Observable<StoriesResponse>
+        @Header(AUTHORIZATION) token: String,
+        @Query(PAGE) page: Int,
+        @Query(SIZE) size: Int,
+        @Query(LOCATION) location: Int = 0
+    ): Single<StoriesResponse>
 
     @Multipart
     @POST(STORIES)
@@ -43,5 +47,8 @@ interface StoryDicodingApi {
         private const val STORIES = "v1/stories"
         private const val AUTHORIZATION = "Authorization"
         private const val DESCRIPTION = "description"
+        private const val PAGE = "page"
+        private const val SIZE = "size"
+        private const val LOCATION = "location"
     }
 }

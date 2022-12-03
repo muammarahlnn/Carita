@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ardnn.carita.CaritaApplication
 import com.ardnn.carita.R
@@ -112,36 +113,50 @@ class MainActivity : AppCompatActivity(), AddStoryFragment.OnSuccessPostStory {
             getStories()
         }
         viewModel.stories.observe(this) { statusStories ->
-            processStories(statusStories) {
-                val stories = statusStories.data
-                if (stories?.isEmpty() as Boolean) {
+            processStories(
+                statusStories,
+                {
+                    val adapter = StoryAdapter { story ->
+                        startActivity(Intent(this, DetailActivity::class.java)
+                            .putExtra(DetailActivity.EXTRA_STORY, story)
+                        )
+                    }.apply {
+                        statusStories.data?.let { data ->
+                            submitData(lifecycle, data)
+                        }
+                    }
+
+                    binding.rvStory.apply {
+                        this.adapter = adapter.withLoadStateFooter(
+                            footer = LoadingStateAdapter {
+                                adapter.retry()
+                            }
+                        )
+                        layoutManager = LinearLayoutManager(
+                            this@MainActivity,
+                            LinearLayoutManager.VERTICAL,
+                            false
+                        )
+                    }
+                },
+                {
                     binding.tvNoConnection.visibility = View.VISIBLE
-                    return@processStories
                 }
-                val adapter = StoryAdapter(stories) { story ->
-                    startActivity(Intent(this, DetailActivity::class.java)
-                        .putExtra(DetailActivity.EXTRA_STORY, story)
-                    )
-                }
-                binding.rvStory.apply {
-                    this.adapter = adapter
-                    layoutManager = LinearLayoutManager(
-                        this@MainActivity,
-                        LinearLayoutManager.VERTICAL,
-                        false
-                    )
-                }
-            }
+            )
         }
         viewModel.logoutStatus.observe(this) { status ->
-            processStories(status) {
+            processStories(status, onSuccess = {
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
-            }
+            })
         }
     }
 
-    private fun processStories(statusStories: Status<*>, onSuccess: () -> Unit) {
+    private fun processStories(
+        statusStories: Status<*>,
+        onSuccess: () -> Unit,
+        onError: () -> Unit = { }
+    ) {
         when (statusStories) {
             is Status.Success -> {
                 hideLoading()
@@ -150,6 +165,7 @@ class MainActivity : AppCompatActivity(), AddStoryFragment.OnSuccessPostStory {
 
             is Status.Error -> {
                 hideLoading()
+                onError()
             }
 
             is Status.Loading -> {

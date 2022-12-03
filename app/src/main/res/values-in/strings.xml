@@ -35,4 +35,5 @@
     <string name="error_connection">Tolong cek koneksi internet Anda.</string>
     <string name="language">Bahasa</string>
     <string name="logout">Keluar</string>
+    <string name="retry">Coba lagi</string>
 </resources>

@@ -1,7 +1,9 @@
 package com.ardnn.carita.data.main.repository.source
 
+import androidx.paging.PagingData
 import com.ardnn.carita.data.main.repository.source.local.model.User
 import com.ardnn.carita.data.main.repository.source.remote.response.StoriesResponse
+import com.ardnn.carita.data.main.repository.source.remote.response.StoryResponse
 import io.reactivex.Observable
 
 interface MainDataSource {
@@ -12,7 +14,7 @@ interface MainDataSource {
 
     fun getUser(): Observable<User>
 
-    fun getStories(token: String): Observable<StoriesResponse>
+    fun getStories(token: String): Observable<PagingData<StoryResponse>>
 
     fun logout(): Observable<Unit>
 }

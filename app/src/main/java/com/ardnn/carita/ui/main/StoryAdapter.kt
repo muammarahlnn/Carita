@@ -2,6 +2,8 @@ package com.ardnn.carita.ui.main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.ardnn.carita.data.main.repository.source.remote.response.StoryResponse
 import com.ardnn.carita.databinding.ItemStoryBinding
@@ -9,9 +11,8 @@ import com.ardnn.carita.ui.util.loadImage
 import com.ardnn.carita.ui.util.withDateFormat
 
 class StoryAdapter(
-    private val list: List<StoryResponse>,
     private val clickListener: OnItemClickListener
-) : RecyclerView.Adapter<StoryAdapter.ViewHolder>() {
+) : PagingDataAdapter<StoryResponse, StoryAdapter.ViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemStoryBinding
@@ -20,10 +21,11 @@ class StoryAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.onBind(list[position])
+        val data = getItem(position)
+        if (data != null) {
+            holder.onBind(data)
+        }
     }
-
-    override fun getItemCount(): Int = list.size
 
     inner class ViewHolder(
         private val binding: ItemStoryBinding
@@ -44,5 +46,21 @@ class StoryAdapter(
     fun interface OnItemClickListener {
 
         fun onItemClick(story: StoryResponse)
+    }
+
+    companion object {
+
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<StoryResponse>() {
+            override fun areItemsTheSame(oldItem: StoryResponse, newItem: StoryResponse): Boolean {
+                return oldItem == newItem
+            }
+
+            override fun areContentsTheSame(
+                oldItem: StoryResponse,
+                newItem: StoryResponse
+            ): Boolean {
+                return oldItem.id == newItem.id
+            }
+        }
     }
 }

@@ -35,4 +35,5 @@
     <string name="error_connection">Please check your internet connection.</string>
     <string name="language">Language</string>
     <string name="logout">Logout</string>
+    <string name="retry">Retry</string>
 </resources>

@@ -1,9 +1,10 @@
 package com.ardnn.carita.data.main.repository
 
+import androidx.paging.PagingData
 import com.ardnn.carita.data.main.repository.source.MainDataFactory
 import com.ardnn.carita.data.main.repository.source.MainDataSource
 import com.ardnn.carita.data.main.repository.source.local.model.User
-import com.ardnn.carita.data.main.repository.source.remote.response.StoriesResponse
+import com.ardnn.carita.data.main.repository.source.remote.response.StoryResponse
 import com.ardnn.carita.data.util.Source
 import io.reactivex.Observable
 import javax.inject.Inject
@@ -21,7 +22,7 @@ class MainRepositoryImpl @Inject constructor(
     override fun getUser(): Observable<User> =
         createLocalMainDataSource().getUser()
 
-    override fun getStories(token: String): Observable<StoriesResponse> =
+    override fun getStories(token: String): Observable<PagingData<StoryResponse>> =
         createRemoteMainDataSource().getStories(token)
 
     override fun logout(): Observable<Unit> =
