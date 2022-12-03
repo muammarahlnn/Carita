@@ -99,4 +99,18 @@
         android:src="@drawable/ic_add"
         android:contentDescription="@string/desc_fab_add_story" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_marginBottom="80dp"
+        app:layout_anchor="@id/fab_add_story"
+        app:layout_anchorGravity="top"
+        app:borderWidth="0dp"
+        android:backgroundTint="@color/navy"
+        app:tint="@color/white_smoke"
+        android:src="@drawable/ic_map"
+        android:contentDescription="@string/desc_fab_add_story" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

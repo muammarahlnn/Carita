@@ -17,6 +17,7 @@ import com.ardnn.carita.databinding.ActivityMainBinding
 import com.ardnn.carita.ui.addstory.AddStoryFragment
 import com.ardnn.carita.ui.detail.DetailActivity
 import com.ardnn.carita.ui.login.LoginActivity
+import com.ardnn.carita.ui.maps.MapsActivity
 import com.ardnn.carita.ui.onboarding.OnBoardingActivity
 import com.ardnn.carita.ui.util.ViewModelFactory
 import com.ardnn.carita.vo.Status
@@ -89,6 +90,9 @@ class MainActivity : AppCompatActivity(), AddStoryFragment.OnSuccessPostStory {
                 }
                 show(supportFragmentManager, "")
             }
+        }
+        binding.fabMap.setOnClickListener {
+            startActivity(Intent(this, MapsActivity::class.java))
         }
     }
 
