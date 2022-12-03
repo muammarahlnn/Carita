@@ -33,7 +33,7 @@ fun showToast(context: Context, message: String) {
 
 fun ImageView.loadImage(
     url: String?,
-    @DrawableRes placeholder: Int = R.drawable.ic_photo_placeholder
+    @DrawableRes placeholder: Int = R.drawable.ic_image
 ) {
     Glide.with(this)
         .load(url ?: placeholder)
