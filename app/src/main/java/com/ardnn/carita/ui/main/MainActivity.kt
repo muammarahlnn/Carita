@@ -134,6 +134,7 @@ class MainActivity : AppCompatActivity(), AddStoryFragment.OnSuccessPostStory {
                         }
                         statusStories.data?.let { data ->
                             submitData(lifecycle, data)
+                            enablingMapsButton()
                         }
                     }
 
@@ -203,6 +204,10 @@ class MainActivity : AppCompatActivity(), AddStoryFragment.OnSuccessPostStory {
 
     private fun showError() {
         binding.tvNoConnection.visibility = View.VISIBLE
+    }
+
+    private fun enablingMapsButton() {
+        binding.fabMap.visibility = View.VISIBLE
     }
 
     override fun onSuccess() {
