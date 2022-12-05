@@ -6,6 +6,7 @@ import com.ardnn.carita.data.di.RemoteModule
 import com.ardnn.carita.ui.addstory.AddStoryFragment
 import com.ardnn.carita.ui.login.LoginActivity
 import com.ardnn.carita.ui.main.MainActivity
+import com.ardnn.carita.ui.maps.MapsActivity
 import com.ardnn.carita.ui.signup.SignUpActivity
 import dagger.BindsInstance
 import dagger.Component
@@ -33,4 +34,6 @@ interface ApplicationComponent {
     fun inject(activity: LoginActivity)
 
     fun inject(fragment: AddStoryFragment)
+
+    fun inject(activity: MapsActivity)
 }

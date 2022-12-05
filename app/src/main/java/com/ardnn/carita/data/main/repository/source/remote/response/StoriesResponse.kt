@@ -31,4 +31,10 @@ data class StoryResponse(
 
     @field:SerializedName("createdAt")
     val createdAt: String? = null,
+
+    @field:SerializedName("lat")
+    val latitude: Double? = null,
+
+    @field:SerializedName("lon")
+    val longitude: Double? = null,
 ) : Parcelable

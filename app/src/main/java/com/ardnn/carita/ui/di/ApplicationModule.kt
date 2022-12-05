@@ -6,6 +6,8 @@ import com.ardnn.carita.data.login.repository.LoginRepository
 import com.ardnn.carita.data.login.repository.LoginRepositoryImpl
 import com.ardnn.carita.data.main.repository.MainRepository
 import com.ardnn.carita.data.main.repository.MainRepositoryImpl
+import com.ardnn.carita.data.maps.repository.MapsRepository
+import com.ardnn.carita.data.maps.repository.MapsRepositoryImpl
 import com.ardnn.carita.data.signup.repository.SignUpRepository
 import com.ardnn.carita.data.signup.repository.SignUpRepositoryImpl
 import dagger.Binds
@@ -30,4 +32,8 @@ abstract class ApplicationModule {
     @Binds
     @Singleton
     abstract fun provideAddStoryRepository(addStoryRepository: AddStoryRepositoryImpl): AddStoryRepository
+
+    @Binds
+    @Singleton
+    abstract fun provideMapsRepository(mapsRepository: MapsRepositoryImpl): MapsRepository
 }

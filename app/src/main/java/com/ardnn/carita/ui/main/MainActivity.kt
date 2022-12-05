@@ -92,7 +92,10 @@ class MainActivity : AppCompatActivity(), AddStoryFragment.OnSuccessPostStory {
             }
         }
         binding.fabMap.setOnClickListener {
-            startActivity(Intent(this, MapsActivity::class.java))
+            startActivity(
+                Intent(this, MapsActivity::class.java)
+                    .putExtra(MapsActivity.EXTRA_USER, user)
+            )
         }
     }
 

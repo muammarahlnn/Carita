@@ -97,4 +97,8 @@ dependencies {
     // mockk
     testImplementation "io.mockk:mockk:1.12.3"
     testImplementation "io.mockk:mockk-agent-jvm:1.12.3"
+
+    // gms
+    implementation 'com.google.android.gms:play-services-maps:18.0.0'
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
 }

@@ -36,4 +36,6 @@
     <string name="language">Bahasa</string>
     <string name="logout">Keluar</string>
     <string name="retry">Coba lagi</string>
+    <string name="error_message_location">Lokasi tidak ditemukan. Coba lagi.</string>
+    <string name="your_location">Lokasi kamu</string>
 </resources>

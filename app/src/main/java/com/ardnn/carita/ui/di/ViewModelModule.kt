@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.ardnn.carita.ui.addstory.AddStoryViewModel
 import com.ardnn.carita.ui.login.LoginViewModel
 import com.ardnn.carita.ui.main.MainViewModel
+import com.ardnn.carita.ui.maps.MapsViewModel
 import com.ardnn.carita.ui.signup.SignUpViewModel
 import com.ardnn.carita.ui.util.ViewModelFactory
 import dagger.Binds
@@ -37,4 +38,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(AddStoryViewModel::class)
     abstract fun bindAddStoryViewModel(viewModel: AddStoryViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(MapsViewModel::class)
+    abstract fun bindMapsViewModel(viewModel: MapsViewModel): ViewModel
 }
