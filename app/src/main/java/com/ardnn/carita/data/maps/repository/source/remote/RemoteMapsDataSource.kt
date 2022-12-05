@@ -14,7 +14,7 @@ class RemoteMapsDataSource @Inject constructor(
         api.getStories(
             token = token,
             page = 1,
-            size = 10,
+            size = 30,
             location = 1
         ).toObservable()
 }
