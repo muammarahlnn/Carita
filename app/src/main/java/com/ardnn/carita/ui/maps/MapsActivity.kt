@@ -140,7 +140,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 .position(currentLocation)
                 .title(getString(R.string.your_location))
         )
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 21f))
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 5f))
     }
 
     private fun showStoriesLocationMarker(storyResponseList: List<StoryResponse>) {
