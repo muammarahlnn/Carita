@@ -1,5 +1,6 @@
 package com.ardnn.carita.data.di
 
+import com.ardnn.carita.BuildConfig
 import com.ardnn.carita.data.main.repository.source.remote.StoryDicodingApi
 import com.ardnn.carita.data.util.ApiConst
 import dagger.Module
@@ -23,7 +24,10 @@ class RemoteModule {
         OkHttpClient.Builder()
             .addInterceptor(
                 HttpLoggingInterceptor()
-                    .setLevel(HttpLoggingInterceptor.Level.BODY))
+                    .setLevel(
+                        if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
+                        else HttpLoggingInterceptor.Level.NONE)
+                    )
             .connectTimeout(120, TimeUnit.SECONDS)
             .readTimeout(120, TimeUnit.SECONDS)
             .build()
