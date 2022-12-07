@@ -1,0 +1,73 @@
+SKENARIO PENGUJIAN
+
+MainViewModelTest:
+- `getHasBeenLaunched should execute getHasBeenLaunchedUseCase`()
+	=> memastikan getHasBeenLaunchedUseCase di-execute ketika memanggil viewmodel.getHasBeenLaunched()
+
+- `getHasBeenLaunched should set value to hasBeenLaunched`()
+	=> memastikan live data hasBeenLaunched terisi nilainya dan tidak null ketika memanggil viewmodel.getHasBeenLaunched()
+
+- `saveHasBeenLaunched should execute saveHasBeenLaunchedUseCase`()
+	=> memastikan saveHasBeenLaunchedUseCase di-execute ketika memanggil viewmodel.saveHasBeenLaunched()
+
+- `getUser should execute getUserUseCase`()
+	=> memastikan getUserUseCase di-execute ketika memanggil viewmodel.getUser()
+
+- `getUser should set value to user`()
+	=> memastikan live data user terisi nilainya dan tidak null ketika memanggil viewmodel.getUser()
+
+- `getUser should set value to isLogin`()
+	=> memastikan live data isLogin terisi nilainya dan tidak null ketika memanggil viewmodel.getUser()
+
+- `getStories should execute getStoriesUseCase`()
+	=> memastikan getStoriesUseCase di-execute ketika memanggil viewmodel.getStories()
+
+- `getStories should set value to stories`()
+	=> memastikan live data stories terisi nilainya dan tidak null ketika memanggil viewmodel.getStories()
+
+- `logout should execute logoutUseCase`()
+	=> memastikan logoutUseCase di-execute ketika memanggil viewmodel.logout()
+
+- `logout should set value to logoutStatus`()
+	=> memastikan live data logoutStatus terisi nilainya dan tidak null ketika memanggil viewmodel.logout()
+
+
+AddStoryViewModelTest:
+- `postStory should execute postStoryUseCase`()
+	=> memastikan postStoryUseCaes di-execute ketika memanggil viewmodel.postStory()
+
+- `postStory should set value to addStory`()
+	=> memastikan live data addStory terisi nilainya dan tidak null ketika memanggil viewmodel.postStory
+
+
+LoginViewModelTest:
+- `postLogin should execute postLoginUseCase`()
+	=> memastikan postLoginUseCase di-execute ketika memanggil viewmodel.postLogin()
+
+- `postLogin should set value to response`()
+	=> memastikan live data response terisi nilainya dan tidak null ketika memanggil viewmodel.postLogin
+
+- `saveUser should execute saveUserUseCase`()
+	=> memastikan saveUserUseCase di-execute ketika memanggil viewmodel.saveUser()
+
+- `saveUser should set value to isUserSuccessfullySaved`()
+	=> memastikan live data isUserSuccessfullySaved terisi nilainya dan tidak null ketika memanggil viewmodel.saveUser
+
+
+MapsViewModelTest:
+- `getStories should execute getStoriesWithLocationUseCase`()
+	=> memastikan getStoriesWithLocationUseCase di-execute ketika memanggil viewmodel.getStories()
+
+- `getStories should set value to stories`()
+	=> memastikan live data stories terisi nilainya dan tidak null ketika memanggil viewmodel.getStories
+
+
+SignUpViewModelTest
+- `postRegister should execute postRegisterUseCase`()
+	=> memastikan postRegisteruseCase di-execute ketika memanggil viewmodel.postRegister()
+
+- `postRegister should set value to message`()
+	=> memastikan live data message terisi nilainya dan tidak null ketika memanggil viewmodel.postRegister
+
+- `postRegister should set value to response`()
+	=> memastikan live data response terisi nilainya dan tidak null ketika memanggil viewmodel.postRegister
