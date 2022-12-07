@@ -1,11 +1,9 @@
 package com.ardnn.carita.data.main.repository.source.remote
 
-import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import androidx.paging.rxjava2.RxPagingSource
 import com.ardnn.carita.data.main.repository.source.remote.response.StoriesResponse
 import com.ardnn.carita.data.main.repository.source.remote.response.StoryResponse
-import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

@@ -3,11 +3,9 @@ package com.ardnn.carita.data.main.repository.source.remote
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import androidx.paging.rxjava2.flowable
 import androidx.paging.rxjava2.observable
 import com.ardnn.carita.data.main.repository.source.MainDataSource
 import com.ardnn.carita.data.main.repository.source.local.model.User
-import com.ardnn.carita.data.main.repository.source.remote.response.StoriesResponse
 import com.ardnn.carita.data.main.repository.source.remote.response.StoryResponse
 import io.reactivex.Observable
 import javax.inject.Inject

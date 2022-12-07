@@ -2,7 +2,6 @@ package com.ardnn.carita.data.main.repository.source
 
 import androidx.paging.PagingData
 import com.ardnn.carita.data.main.repository.source.local.model.User
-import com.ardnn.carita.data.main.repository.source.remote.response.StoriesResponse
 import com.ardnn.carita.data.main.repository.source.remote.response.StoryResponse
 import io.reactivex.Observable
 
