@@ -55,25 +55,25 @@ class SignUpViewModelTest {
     fun `postRegister should set value to message`() {
         // when
         viewModel.postRegister(dummyRegisterRequest)
-        viewModel.message.getOrAwaitValue()
+        val messageData = viewModel.message.getOrAwaitValue()
 
         // then
         verify {
             postRegisterUseCase.execute(any())
         }
-        assertNotNull(viewModel.message)
+        assertNotNull(messageData)
     }
 
     @Test
     fun `postRegister should set value to response`() {
         // when
         viewModel.postRegister(dummyRegisterRequest)
-        viewModel.response.getOrAwaitValue()
+        val responseData = viewModel.response.getOrAwaitValue()
 
         // then
         verify {
             postRegisterUseCase.execute(any())
         }
-        assertNotNull(viewModel.response)
+        assertNotNull(responseData)
     }
 }

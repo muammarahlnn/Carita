@@ -75,13 +75,13 @@ class MainViewModelTest {
 
         // when
         viewModel.getHasBeenLaunched()
-        viewModel.hasBeenLaunched.getOrAwaitValue()
+        val hasBeenLaunchedData = viewModel.hasBeenLaunched.getOrAwaitValue()
 
         // then
         verify {
             getHasBeenLaunchedUseCase.execute()
         }
-        assertNotNull(viewModel.hasBeenLaunched)
+        assertNotNull(hasBeenLaunchedData)
     }
 
     @Test
@@ -125,13 +125,13 @@ class MainViewModelTest {
 
         // when
         viewModel.getUser()
-        viewModel.user.getOrAwaitValue()
+        val userData = viewModel.user.getOrAwaitValue()
 
         // then
         verify {
             getUserUseCase.execute()
         }
-        assertNotNull(viewModel.user)
+        assertNotNull(userData)
     }
 
     @Test
@@ -143,13 +143,13 @@ class MainViewModelTest {
 
         // when
         viewModel.getUser()
-        viewModel.isLogin.getOrAwaitValue()
+        val isLoginData = viewModel.isLogin.getOrAwaitValue()
 
         // then
         verify {
             getUserUseCase.execute()
         }
-        assertNotNull(viewModel.isLogin)
+        assertNotNull(isLoginData)
     }
 
     @Test
@@ -177,13 +177,13 @@ class MainViewModelTest {
 
         // when
         viewModel.getStories("")
-        viewModel.stories.getOrAwaitValue()
+        val storiesData = viewModel.stories.getOrAwaitValue()
 
         // then
         verify {
             getStoriesUseCase.execute(any())
         }
-        assertNotNull(viewModel.stories)
+        assertNotNull(storiesData)
     }
 
     @Test
@@ -211,12 +211,12 @@ class MainViewModelTest {
 
         // when
         viewModel.logout()
-        viewModel.logoutStatus.getOrAwaitValue()
+        val logoutStatusData = viewModel.logoutStatus.getOrAwaitValue()
 
         // then
         verify {
             logoutUseCase.execute()
         }
-        assertNotNull(viewModel.logoutStatus)
+        assertNotNull(logoutStatusData)
     }
 }

@@ -77,13 +77,13 @@ class LoginViewModelTest {
 
         // when
         viewModel.postLogin(dummyLoginRequest)
-        viewModel.response.getOrAwaitValue()
+        val responseData = viewModel.response.getOrAwaitValue()
 
         // then
         verify {
             postLoginUseCase.execute(any())
         }
-        assertNotNull(viewModel.response)
+        assertNotNull(responseData)
     }
 
     @Test
@@ -111,12 +111,12 @@ class LoginViewModelTest {
 
         // when
         viewModel.saveUser(dummyUser)
-        viewModel.isUserSuccessfullySaved.getOrAwaitValue()
+        val isUserSuccessfullySavedData = viewModel.isUserSuccessfullySaved.getOrAwaitValue()
 
         // then
         verify {
             saveUserUseCase.execute(any())
         }
-        assertNotNull(viewModel.isUserSuccessfullySaved)
+        assertNotNull(isUserSuccessfullySavedData)
     }
 }

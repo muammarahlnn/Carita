@@ -56,12 +56,12 @@ class MapsViewModelTest {
     fun `getStories should set value to stories`() {
         // when
         viewModel.getStories("")
-        viewModel.stories.getOrAwaitValue()
+        val storiesData = viewModel.stories.getOrAwaitValue()
 
         // then
         verify {
             getStoriesWithLocationUseCase.execute(any())
         }
-        assertNotNull(viewModel.stories)
+        assertNotNull(storiesData)
     }
 }

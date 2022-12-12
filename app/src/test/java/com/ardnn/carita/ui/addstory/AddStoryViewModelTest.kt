@@ -63,12 +63,12 @@ class AddStoryViewModelTest {
     fun `postStory should set value to addStory`() {
         // when
         viewModel.postStory("", multipartBody, requestBody)
-        viewModel.addStory.getOrAwaitValue()
+        val addStoryData = viewModel.addStory.getOrAwaitValue()
 
         // then
         verify {
             postStoryUseCase.execute(any(), any(), any())
         }
-        assertNotNull(viewModel.addStory)
+        assertNotNull(addStoryData)
     }
 }
