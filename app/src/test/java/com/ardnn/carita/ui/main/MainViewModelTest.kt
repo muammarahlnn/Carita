@@ -95,7 +95,7 @@ class MainViewModelTest {
         viewModel.saveHasBeenLaunched()
 
         // then
-        every {
+        verify {
             saveHasBeenLaunchedUseCase.execute()
         }
     }
