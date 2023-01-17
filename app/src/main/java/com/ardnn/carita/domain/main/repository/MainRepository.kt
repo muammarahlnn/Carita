@@ -1,4 +1,4 @@
-package com.ardnn.carita.data.main.repository
+package com.ardnn.carita.domain.main.repository
 
 import androidx.paging.PagingData
 import com.ardnn.carita.data.main.repository.source.local.model.User

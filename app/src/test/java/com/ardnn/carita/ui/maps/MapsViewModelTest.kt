@@ -2,7 +2,7 @@ package com.ardnn.carita.ui.maps
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.ardnn.carita.data.main.repository.source.remote.response.StoriesResponse
-import com.ardnn.carita.data.maps.interactor.GetStoriesWithLocationUseCase
+import com.ardnn.carita.domain.maps.interactor.GetStoriesWithLocationUseCase
 import com.ardnn.carita.util.getOrAwaitValue
 import io.mockk.every
 import io.mockk.mockk

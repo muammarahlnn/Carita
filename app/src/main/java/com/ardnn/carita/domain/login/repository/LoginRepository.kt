@@ -1,4 +1,4 @@
-package com.ardnn.carita.data.login.repository
+package com.ardnn.carita.domain.login.repository
 
 import com.ardnn.carita.data.login.repository.source.remote.request.LoginRequest
 import com.ardnn.carita.data.login.repository.source.remote.response.LoginResponse

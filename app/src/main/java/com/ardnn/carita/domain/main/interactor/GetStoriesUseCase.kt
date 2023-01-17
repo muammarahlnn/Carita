@@ -1,7 +1,7 @@
-package com.ardnn.carita.data.main.interactor
+package com.ardnn.carita.domain.main.interactor
 
 import androidx.paging.PagingData
-import com.ardnn.carita.data.main.repository.MainRepository
+import com.ardnn.carita.domain.main.repository.MainRepository
 import com.ardnn.carita.data.main.repository.source.remote.response.StoryResponse
 import io.reactivex.Observable
 import javax.inject.Inject

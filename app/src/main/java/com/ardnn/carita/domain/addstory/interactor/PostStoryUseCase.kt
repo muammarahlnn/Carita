@@ -1,6 +1,6 @@
-package com.ardnn.carita.data.addstory.interactor
+package com.ardnn.carita.domain.addstory.interactor
 
-import com.ardnn.carita.data.addstory.repository.AddStoryRepository
+import com.ardnn.carita.domain.addstory.repository.AddStoryRepository
 import com.ardnn.carita.data.addstory.repository.source.remote.response.AddStoryResponse
 import io.reactivex.Observable
 import okhttp3.MultipartBody

@@ -4,6 +4,7 @@ import com.ardnn.carita.data.main.repository.source.remote.response.StoriesRespo
 import com.ardnn.carita.data.maps.repository.source.MapsDataFactory
 import com.ardnn.carita.data.maps.repository.source.MapsDataSource
 import com.ardnn.carita.data.util.Source
+import com.ardnn.carita.domain.maps.repository.MapsRepository
 import io.reactivex.Observable
 import javax.inject.Inject
 

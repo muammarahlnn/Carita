@@ -6,6 +6,7 @@ import com.ardnn.carita.data.main.repository.source.MainDataSource
 import com.ardnn.carita.data.main.repository.source.local.model.User
 import com.ardnn.carita.data.main.repository.source.remote.response.StoryResponse
 import com.ardnn.carita.data.util.Source
+import com.ardnn.carita.domain.main.repository.MainRepository
 import io.reactivex.Observable
 import javax.inject.Inject
 

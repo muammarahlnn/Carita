@@ -5,6 +5,7 @@ import com.ardnn.carita.data.signup.repository.source.SignUpDataSource
 import com.ardnn.carita.data.signup.repository.source.remote.request.RegisterRequest
 import com.ardnn.carita.data.signup.repository.source.remote.response.RegisterResponse
 import com.ardnn.carita.data.util.Source
+import com.ardnn.carita.domain.signup.repository.SignUpRepository
 import io.reactivex.Observable
 import javax.inject.Inject
 

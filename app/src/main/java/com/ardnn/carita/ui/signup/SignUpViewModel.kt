@@ -2,7 +2,7 @@ package com.ardnn.carita.ui.signup
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.ardnn.carita.data.signup.interactor.PostRegisterUseCase
+import com.ardnn.carita.domain.signup.interactor.PostRegisterUseCase
 import com.ardnn.carita.data.signup.repository.source.remote.request.RegisterRequest
 import com.ardnn.carita.data.signup.repository.source.remote.response.RegisterResponse
 import com.ardnn.carita.vo.Event

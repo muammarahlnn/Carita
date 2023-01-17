@@ -1,15 +1,15 @@
 package com.ardnn.carita.ui.di
 
-import com.ardnn.carita.data.addstory.repository.AddStoryRepository
 import com.ardnn.carita.data.addstory.repository.AddStoryRepositoryImpl
-import com.ardnn.carita.data.login.repository.LoginRepository
 import com.ardnn.carita.data.login.repository.LoginRepositoryImpl
-import com.ardnn.carita.data.main.repository.MainRepository
 import com.ardnn.carita.data.main.repository.MainRepositoryImpl
-import com.ardnn.carita.data.maps.repository.MapsRepository
 import com.ardnn.carita.data.maps.repository.MapsRepositoryImpl
-import com.ardnn.carita.data.signup.repository.SignUpRepository
 import com.ardnn.carita.data.signup.repository.SignUpRepositoryImpl
+import com.ardnn.carita.domain.addstory.repository.AddStoryRepository
+import com.ardnn.carita.domain.login.repository.LoginRepository
+import com.ardnn.carita.domain.main.repository.MainRepository
+import com.ardnn.carita.domain.maps.repository.MapsRepository
+import com.ardnn.carita.domain.signup.repository.SignUpRepository
 import dagger.Binds
 import dagger.Module
 import javax.inject.Singleton

@@ -2,8 +2,8 @@ package com.ardnn.carita.ui.login
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.ardnn.carita.data.login.interactor.PostLoginUseCase
-import com.ardnn.carita.data.login.interactor.SaveUserUseCase
+import com.ardnn.carita.domain.login.interactor.PostLoginUseCase
+import com.ardnn.carita.domain.login.interactor.SaveUserUseCase
 import com.ardnn.carita.data.login.repository.source.remote.request.LoginRequest
 import com.ardnn.carita.data.login.repository.source.remote.response.LoginResponse
 import com.ardnn.carita.data.main.repository.source.local.model.User

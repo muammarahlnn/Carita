@@ -1,7 +1,7 @@
-package com.ardnn.carita.data.maps.interactor
+package com.ardnn.carita.domain.maps.interactor
 
 import com.ardnn.carita.data.main.repository.source.remote.response.StoriesResponse
-import com.ardnn.carita.data.maps.repository.MapsRepository
+import com.ardnn.carita.domain.maps.repository.MapsRepository
 import io.reactivex.Observable
 import javax.inject.Inject
 

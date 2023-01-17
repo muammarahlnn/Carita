@@ -1,4 +1,4 @@
-package com.ardnn.carita.data.addstory.repository
+package com.ardnn.carita.domain.addstory.repository
 
 import com.ardnn.carita.data.addstory.repository.source.remote.response.AddStoryResponse
 import io.reactivex.Observable

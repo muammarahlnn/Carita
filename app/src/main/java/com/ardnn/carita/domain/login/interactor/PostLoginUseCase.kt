@@ -1,6 +1,6 @@
-package com.ardnn.carita.data.login.interactor
+package com.ardnn.carita.domain.login.interactor
 
-import com.ardnn.carita.data.login.repository.LoginRepository
+import com.ardnn.carita.domain.login.repository.LoginRepository
 import com.ardnn.carita.data.login.repository.source.remote.request.LoginRequest
 import com.ardnn.carita.data.login.repository.source.remote.response.LoginResponse
 import io.reactivex.Observable

@@ -1,7 +1,7 @@
 package com.ardnn.carita.ui.signup
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.ardnn.carita.data.signup.interactor.PostRegisterUseCase
+import com.ardnn.carita.domain.signup.interactor.PostRegisterUseCase
 import com.ardnn.carita.data.signup.repository.source.remote.request.RegisterRequest
 import com.ardnn.carita.data.signup.repository.source.remote.response.RegisterResponse
 import com.ardnn.carita.util.getOrAwaitValue

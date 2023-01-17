@@ -1,7 +1,7 @@
 package com.ardnn.carita.ui.addstory
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.ardnn.carita.data.addstory.interactor.PostStoryUseCase
+import com.ardnn.carita.domain.addstory.interactor.PostStoryUseCase
 import com.ardnn.carita.data.addstory.repository.source.remote.response.AddStoryResponse
 import com.ardnn.carita.util.getOrAwaitValue
 import io.mockk.every

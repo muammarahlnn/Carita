@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ardnn.carita.data.main.repository.source.remote.response.StoryResponse
-import com.ardnn.carita.data.maps.interactor.GetStoriesWithLocationUseCase
+import com.ardnn.carita.domain.maps.interactor.GetStoriesWithLocationUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers

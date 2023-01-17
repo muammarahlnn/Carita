@@ -2,8 +2,8 @@ package com.ardnn.carita.ui.main
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.paging.PagingData
-import com.ardnn.carita.data.main.interactor.*
 import com.ardnn.carita.data.main.repository.source.local.model.User
+import com.ardnn.carita.domain.main.interactor.*
 import com.ardnn.carita.util.getOrAwaitValue
 import io.mockk.every
 import io.mockk.mockk

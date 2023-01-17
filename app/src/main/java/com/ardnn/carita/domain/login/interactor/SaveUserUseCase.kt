@@ -1,6 +1,6 @@
-package com.ardnn.carita.data.login.interactor
+package com.ardnn.carita.domain.login.interactor
 
-import com.ardnn.carita.data.login.repository.LoginRepository
+import com.ardnn.carita.domain.login.repository.LoginRepository
 import com.ardnn.carita.data.main.repository.source.local.model.User
 import io.reactivex.Observable
 import javax.inject.Inject
