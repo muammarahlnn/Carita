@@ -1,4 +1,4 @@
-package com.ardnn.carita.view
+package com.ardnn.carita.ui.customview
 
 import android.content.Context
 import android.graphics.Canvas
