@@ -1,30 +1,31 @@
 package com.ardnn.carita.data.main.repository.source.remote
 
+import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import androidx.paging.rxjava2.RxPagingSource
-import com.ardnn.carita.data.main.repository.source.remote.response.StoriesResponse
 import com.ardnn.carita.data.main.repository.source.remote.response.StoryResponse
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import javax.inject.Inject
 
-class StoryPagingSource @Inject constructor(
+
+/**
+ * @author Muammar Ahlan Abimanyu (muammarahlnn)
+ * @file StoryPagingSource, 18/01/2023 14.39 by Muammar Ahlan Abimanyu
+ */
+class StoryPagingSource(
     private val api: StoryDicodingApi,
-    private val token: String,
-) : RxPagingSource<Int, StoryResponse>() {
+    private val token: String
+) : PagingSource<Int, StoryResponse>() {
 
-    override fun loadSingle(params: LoadParams<Int>): Single<LoadResult<Int, StoryResponse>> {
-        val position = params.key ?: INITIAL_PAGE_INDEX
-        return api.getStories(token, position, params.loadSize)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .map {
-                toLoadResult(it, position)
-            }
-            .onErrorReturn {
-                LoadResult.Error(it)
-            }
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, StoryResponse> {
+        return try {
+            val position = params.key ?: INITIAL_PAGE_INDEX
+            val stories = api.getStories(token, position, params.loadSize).listStory
+            LoadResult.Page(
+                data = stories ?: listOf(),
+                prevKey = if (position == INITIAL_PAGE_INDEX) null else position - 1,
+                nextKey = if (stories.isNullOrEmpty()) null else position + 1
+            )
+        } catch (ex: Exception) {
+            return LoadResult.Error(ex)
+        }
     }
 
     override fun getRefreshKey(state: PagingState<Int, StoryResponse>): Int? {
@@ -32,14 +33,6 @@ class StoryPagingSource @Inject constructor(
             val anchorPage = state.closestPageToPosition(position)
             anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
         }
-    }
-
-    private fun toLoadResult(data: StoriesResponse, position: Int): LoadResult<Int, StoryResponse> {
-        return LoadResult.Page(
-            data = data.listStory ?: listOf(),
-            prevKey = if (position == INITIAL_PAGE_INDEX) null else position - 1,
-            nextKey = if (data.listStory?.isEmpty() == true) null else position + 1
-        )
     }
 
     companion object {

@@ -4,16 +4,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
-import androidx.paging.rxjava2.cachedIn
+import com.ardnn.carita.R
 import com.ardnn.carita.data.main.repository.source.local.model.User
-import com.ardnn.carita.data.main.repository.source.remote.response.StoryResponse
 import com.ardnn.carita.domain.main.interactor.*
 import com.ardnn.carita.vo.Status
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -21,9 +21,43 @@ class MainViewModel @Inject constructor(
     private val getHasBeenLaunchedUseCase: GetHasBeenLaunchedUseCase,
     private val saveHasBeenLaunchedUseCase: SaveHasBeenLaunchedUseCase,
     private val getUserUseCase: GetUserUseCase,
-    private val getStoriesUseCase: GetStoriesUseCase,
     private val logoutUseCase: LogoutUseCase,
+    private val getStories: GetStories
 ) : ViewModel() {
+
+    private val _uiState = MutableStateFlow<MainUiState>(MainUiState.None)
+    val uiState = _uiState.asStateFlow()
+
+    fun getStoriesFlow(token: String) {
+        getStories.execute(
+            params = GetStories.Params(
+                "Bearer $token",
+                viewModelScope
+            ),
+            onStart = {
+                _uiState.update {
+                    MainUiState.Loading(true)
+                }
+            },
+            onSuccess = { stories ->
+                _uiState.update {
+                    MainUiState.OnSuccessGetStories(stories)
+                }
+            },
+            onError = {
+                Timber.e(it.message)
+                _uiState.update {
+                    MainUiState.Error(R.string.error_connection)
+                }
+            },
+            onCompletion = {
+              _uiState.update {
+                  MainUiState.Loading(false)
+              }
+            },
+            coroutineScope = viewModelScope
+        )
+    }
 
     private val disposables = CompositeDisposable()
 
@@ -83,27 +117,6 @@ class MainViewModel @Inject constructor(
                     },
                     {
                         Timber.e(it.message.toString())
-                    }
-                )
-        )
-    }
-
-    private val _stories = MutableLiveData<Status<PagingData<StoryResponse>>>()
-    val stories: LiveData<Status<PagingData<StoryResponse>>> get() = _stories
-    @OptIn(ExperimentalCoroutinesApi::class)
-    fun getStories(token: String) {
-        disposables.add(
-            getStoriesUseCase.execute("Bearer $token")
-                .cachedIn(viewModelScope)
-                .doOnSubscribe {
-                    _stories.value = Status.Loading()
-                }
-                .subscribe(
-                    {
-                        _stories.value = Status.Success(it)
-                    },
-                    {
-                        _stories.value = Status.Error(it.message.toString())
                     }
                 )
         )

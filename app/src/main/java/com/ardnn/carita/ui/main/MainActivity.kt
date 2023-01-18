@@ -8,11 +8,16 @@ import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ardnn.carita.CaritaApplication
 import com.ardnn.carita.R
 import com.ardnn.carita.data.main.repository.source.local.model.User
+import com.ardnn.carita.data.main.repository.source.remote.response.StoryResponse
 import com.ardnn.carita.databinding.ActivityMainBinding
 import com.ardnn.carita.ui.addstory.AddStoryFragment
 import com.ardnn.carita.ui.detail.DetailActivity
@@ -21,6 +26,7 @@ import com.ardnn.carita.ui.maps.MapsActivity
 import com.ardnn.carita.ui.onboarding.OnBoardingActivity
 import com.ardnn.carita.ui.util.ViewModelFactory
 import com.ardnn.carita.vo.Status
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -46,6 +52,7 @@ class MainActivity : AppCompatActivity(), AddStoryFragment.OnSuccessPostStory {
 
         setupToolbar()
         setupViewModel()
+        initLifecycleActivity()
         setupAction()
     }
 
@@ -119,51 +126,66 @@ class MainActivity : AppCompatActivity(), AddStoryFragment.OnSuccessPostStory {
             this.user = user
             getStories()
         }
-        viewModel.stories.observe(this) { statusStories ->
-            processStatus(
-                statusStories,
-                {
-                    val adapter = StoryAdapter { story ->
-                        startActivity(Intent(this, DetailActivity::class.java)
-                            .putExtra(DetailActivity.EXTRA_STORY, story)
-                        )
-                    }.apply {
-                        addLoadStateListener { loadState ->
-                            when (loadState.source.refresh) {
-                                is LoadState.Loading -> showLoading()
-                                is LoadState.NotLoading -> hideLoading()
-                                is LoadState.Error -> showError()
-                            }
-                        }
-                        statusStories.data?.let { data ->
-                            submitData(lifecycle, data)
-                            enablingMapsButton()
-                        }
-                    }
-
-                    binding.rvStory.apply {
-                        this.adapter = adapter.withLoadStateFooter(
-                            footer = LoadingStateAdapter {
-                                adapter.retry()
-                            }
-                        )
-                        layoutManager = LinearLayoutManager(
-                            this@MainActivity,
-                            LinearLayoutManager.VERTICAL,
-                            false
-                        )
-                    }
-                },
-                {
-                    showError()
-                }
-            )
-        }
         viewModel.logoutStatus.observe(this) { status ->
             processStatus(status, onSuccess = {
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             })
+        }
+    }
+
+    private fun initLifecycleActivity() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { state ->
+                    when (state) {
+                        is MainUiState.Loading -> {
+                            if (state.isLoading) showLoading()
+                            else hideLoading()
+                        }
+                        is MainUiState.Error -> {
+                            showError()
+                        }
+                        is MainUiState.OnSuccessGetStories -> {
+                            handleOnSuccessGetStories(state.stories)
+                        }
+                        else -> {
+                            // no op
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun handleOnSuccessGetStories(data: PagingData<StoryResponse>) {
+        val adapter = StoryAdapter { story ->
+            startActivity(Intent(this, DetailActivity::class.java)
+                .putExtra(DetailActivity.EXTRA_STORY, story)
+            )
+        }.apply {
+            addLoadStateListener { loadState ->
+                when (loadState.source.refresh) {
+                    is LoadState.Loading -> showLoading()
+                    is LoadState.NotLoading -> hideLoading()
+                    is LoadState.Error -> showError()
+                }
+            }
+            submitData(lifecycle, data)
+            enablingMapsButton()
+        }
+
+        binding.rvStory.apply {
+            this.adapter = adapter.withLoadStateFooter(
+                footer = LoadingStateAdapter {
+                    adapter.retry()
+                }
+            )
+            layoutManager = LinearLayoutManager(
+                this@MainActivity,
+                LinearLayoutManager.VERTICAL,
+                false
+            )
         }
     }
 
@@ -194,7 +216,7 @@ class MainActivity : AppCompatActivity(), AddStoryFragment.OnSuccessPostStory {
     }
 
     private fun getStories() {
-        viewModel.getStories(user.token.toString())
+        viewModel.getStoriesFlow(user.token.toString())
     }
 
     private fun showLoading() {

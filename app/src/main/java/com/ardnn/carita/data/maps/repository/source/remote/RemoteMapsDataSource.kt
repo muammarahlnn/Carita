@@ -11,10 +11,6 @@ class RemoteMapsDataSource @Inject constructor(
 ) : MapsDataSource {
 
     override fun getStories(token: String): Observable<StoriesResponse> =
-        api.getStories(
-            token = token,
-            page = 1,
-            size = 30,
-            location = 1
-        ).toObservable()
+        // TODO: refactor to use flow
+        Observable.just(StoriesResponse())
 }

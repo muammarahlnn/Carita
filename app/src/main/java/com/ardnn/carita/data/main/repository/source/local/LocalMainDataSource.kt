@@ -5,6 +5,7 @@ import com.ardnn.carita.data.main.repository.source.MainDataSource
 import com.ardnn.carita.data.main.repository.source.local.model.User
 import com.ardnn.carita.data.main.repository.source.remote.response.StoryResponse
 import io.reactivex.Observable
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class LocalMainDataSource @Inject constructor(
@@ -20,7 +21,7 @@ class LocalMainDataSource @Inject constructor(
     override fun getUser(): Observable<User> =
         Observable.just(mainPreference.getUser())
 
-    override fun getStories(token: String): Observable<PagingData<StoryResponse>> {
+    override fun getStories(token: String): Flow<PagingData<StoryResponse>> {
         throw UnsupportedOperationException("No implementation on local data")
     }
 
