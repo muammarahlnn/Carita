@@ -8,6 +8,5 @@ class SaveHasBeenLaunchedUseCase @Inject constructor(
     private val mainRepository: MainRepository
 ) {
 
-    fun execute(): Observable<Unit> =
-        mainRepository.saveHasBeenLaunched()
+    fun execute(): Observable<Unit> = Observable.just(Unit)
 }

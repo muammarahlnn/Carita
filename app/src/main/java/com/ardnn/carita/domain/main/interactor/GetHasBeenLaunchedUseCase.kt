@@ -8,6 +8,5 @@ class GetHasBeenLaunchedUseCase @Inject constructor(
     private val mainRepository: MainRepository
 ) {
 
-    fun execute(): Observable<Boolean> =
-        mainRepository.getHasBeenLaunched()
+    fun execute(): Observable<Boolean> = Observable.just(false)
 }

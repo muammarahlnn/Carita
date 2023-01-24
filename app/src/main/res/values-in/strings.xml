@@ -32,7 +32,9 @@
     <string name="desc_btn_capture_image">Button capture photo</string>
     <string name="desc_btn_switch_camera">Button switch camera</string>
     <string name="default_desc_photo">Ini adalah deskripsi</string>
+    <string name="error_system_busy">Sistem sedang sibuk.</string>
     <string name="error_connection">Tolong cek koneksi internet Anda.</string>
+    <string name="error_logout">Tidak dapat logout untuk saaat ini, mohon coba lagi.</string>
     <string name="language">Bahasa</string>
     <string name="logout">Keluar</string>
     <string name="retry">Coba lagi</string>

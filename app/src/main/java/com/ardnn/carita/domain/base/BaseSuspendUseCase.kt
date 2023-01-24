@@ -23,20 +23,17 @@ abstract class BaseSuspendUseCase<Params>(
         onSuccess: () -> Unit = {},
         onError: (Throwable) -> Unit = {},
         onCompletion: () -> Unit = {},
-        coroutineScope: CoroutineScope
     ) {
-        coroutineScope.launch {
-            buildUseCase(params)
-                .flowOn(defaultDispatcher)
-                .onStart {
-                    onStart.invoke()
-                }.onEach {
-                    onSuccess.invoke()
-                }.catch {
-                    onError.invoke(it)
-                }.onCompletion {
-                    onCompletion.invoke()
-                }
-        }
+        buildUseCase(params)
+            .flowOn(defaultDispatcher)
+            .onStart {
+                onStart.invoke()
+            }.onEach {
+                onSuccess.invoke()
+            }.catch {
+                onError.invoke(it)
+            }.onCompletion {
+                onCompletion.invoke()
+            }
     }
 }

@@ -18,13 +18,14 @@ class MainPreference @Inject constructor(context: Context) {
         }
     }
 
-    fun getUser(): User = User().apply {
-        with(preferences) {
-            userId = getString(USER_ID, null)
-            name = getString(USER_NAME, null)
-            token = getString(USER_TOKEN, null)
-        }
-    }
+    // (HERE)
+//    fun getUser(): User = User().apply {
+//        with(preferences) {
+//            userId = getString(USER_ID, null)
+//            name = getString(USER_NAME, null)
+//            token = getString(USER_TOKEN, null)
+//        }
+//    }
 
     fun saveUser(user: User) {
         preferences.edit().apply {

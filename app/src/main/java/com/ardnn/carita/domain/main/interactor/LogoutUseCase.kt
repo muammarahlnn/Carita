@@ -8,6 +8,5 @@ class LogoutUseCase @Inject constructor(
     private val mainRepository: MainRepository
 ) {
 
-   fun execute(): Observable<Unit> =
-       mainRepository.logout()
+   fun execute(): Observable<Unit> = Observable.just(Unit)
 }

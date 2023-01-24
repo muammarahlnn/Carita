@@ -25,9 +25,9 @@ import com.ardnn.carita.ui.login.LoginActivity
 import com.ardnn.carita.ui.maps.MapsActivity
 import com.ardnn.carita.ui.onboarding.OnBoardingActivity
 import com.ardnn.carita.ui.util.ViewModelFactory
+import com.ardnn.carita.ui.util.showToast
 import com.ardnn.carita.vo.Status
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), AddStoryFragment.OnSuccessPostStory {
@@ -50,9 +50,9 @@ class MainActivity : AppCompatActivity(), AddStoryFragment.OnSuccessPostStory {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupToolbar()
-        setupViewModel()
+        executeInitialUseCases()
         initLifecycleActivity()
+        setupToolbar()
         setupAction()
     }
 
@@ -68,7 +68,8 @@ class MainActivity : AppCompatActivity(), AddStoryFragment.OnSuccessPostStory {
             }
 
             R.id.nav_logout -> {
-                logout()
+//                logout()
+                viewModel.logoutFlow()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -81,12 +82,6 @@ class MainActivity : AppCompatActivity(), AddStoryFragment.OnSuccessPostStory {
     private fun setupToolbar() {
         setSupportActionBar(binding.toolbar.root)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-    }
-
-    private fun setupViewModel() {
-        viewModel.getHasBeenLaunched()
-        viewModel.getUser()
-        subscribeViewModel()
     }
 
     private fun setupAction() {
@@ -106,32 +101,8 @@ class MainActivity : AppCompatActivity(), AddStoryFragment.OnSuccessPostStory {
         }
     }
 
-    private fun subscribeViewModel() {
-        viewModel.hasBeenLaunched.observe(this) { hasBeenLaunched ->
-            if (!hasBeenLaunched) {
-                viewModel.saveHasBeenLaunched()
-                startActivity(Intent(this, OnBoardingActivity::class.java))
-                finishAffinity()
-            }
-        }
-        viewModel.isLogin.observe(this) { isLogin ->
-            if (!isLogin) {
-                // to login
-                startActivity(Intent(this, LoginActivity::class.java))
-                finishAffinity()
-            }
-        }
-        viewModel.user.observe(this) { user ->
-            Timber.d("USER -> ${user.name}")
-            this.user = user
-            getStories()
-        }
-        viewModel.logoutStatus.observe(this) { status ->
-            processStatus(status, onSuccess = {
-                startActivity(Intent(this, LoginActivity::class.java))
-                finish()
-            })
-        }
+    private fun executeInitialUseCases() {
+        viewModel.getHasBeenLaunchedFlow()
     }
 
     private fun initLifecycleActivity() {
@@ -143,12 +114,35 @@ class MainActivity : AppCompatActivity(), AddStoryFragment.OnSuccessPostStory {
                             if (state.isLoading) showLoading()
                             else hideLoading()
                         }
+
                         is MainUiState.Error -> {
                             showError()
                         }
+
+                        is MainUiState.ErrorToast -> {
+                            showToast(this@MainActivity, getString(state.stringId))
+                        }
+
+                        is MainUiState.OnSuccessGetHasBeenLaunched -> {
+                            handleOnSuccessGetHasBeenLaunched(state.hasBeenLaunched)
+                        }
+
+                        is MainUiState.OnUserIsLogin -> {
+                            handleOnUserIsLogin(state.user)
+                        }
+
+                        is MainUiState.OnUserNotLogin -> {
+                            handleUserNotLogin()
+                        }
+
                         is MainUiState.OnSuccessGetStories -> {
                             handleOnSuccessGetStories(state.stories)
                         }
+
+                        is MainUiState.OnSuccessLogout -> {
+                            handleOnSuccessLogout()
+                        }
+
                         else -> {
                             // no op
                         }
@@ -156,6 +150,25 @@ class MainActivity : AppCompatActivity(), AddStoryFragment.OnSuccessPostStory {
                 }
             }
         }
+    }
+
+    private fun handleOnSuccessGetHasBeenLaunched(hasBeenLaunched: Boolean) {
+        if (!hasBeenLaunched) {
+            finish()
+            startActivity(Intent(this@MainActivity, OnBoardingActivity::class.java))
+        } else {
+            viewModel.getUserFlow()
+        }
+    }
+
+    private fun handleOnUserIsLogin(user: User) {
+        this.user = user
+        getStories()
+    }
+
+    private fun handleUserNotLogin() {
+        finish()
+        startActivity(Intent(this, LoginActivity::class.java))
     }
 
     private fun handleOnSuccessGetStories(data: PagingData<StoryResponse>) {
@@ -189,6 +202,11 @@ class MainActivity : AppCompatActivity(), AddStoryFragment.OnSuccessPostStory {
         }
     }
 
+    private fun handleOnSuccessLogout() {
+        startActivity(Intent(this, LoginActivity::class.java))
+        finish()
+    }
+
     private fun processStatus(
         statusStories: Status<*>,
         onSuccess: () -> Unit,
@@ -216,7 +234,7 @@ class MainActivity : AppCompatActivity(), AddStoryFragment.OnSuccessPostStory {
     }
 
     private fun getStories() {
-        viewModel.getStoriesFlow(user.token.toString())
+        viewModel.getStories(user.token)
     }
 
     private fun showLoading() {

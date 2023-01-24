@@ -6,7 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ardnn.carita.R
 import com.ardnn.carita.data.main.repository.source.local.model.User
+import com.ardnn.carita.domain.base.NoParams
 import com.ardnn.carita.domain.main.interactor.*
+import com.ardnn.carita.domain.onboarding.interactor.SaveHasBeenLaunched
 import com.ardnn.carita.vo.Status
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -19,16 +21,89 @@ import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
     private val getHasBeenLaunchedUseCase: GetHasBeenLaunchedUseCase,
+    private val getHasBeenLaunched: GetHasBeenLaunched,
     private val saveHasBeenLaunchedUseCase: SaveHasBeenLaunchedUseCase,
     private val getUserUseCase: GetUserUseCase,
+    private val getUser: GetUser,
     private val logoutUseCase: LogoutUseCase,
+    private val logout: Logout,
     private val getStories: GetStories
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<MainUiState>(MainUiState.None)
     val uiState = _uiState.asStateFlow()
 
-    fun getStoriesFlow(token: String) {
+    fun getHasBeenLaunchedFlow() {
+        getHasBeenLaunched.execute(
+            params = NoParams,
+            onSuccess = { hasBeenLaunched ->
+                _uiState.update {
+                    MainUiState.OnSuccessGetHasBeenLaunched(hasBeenLaunched)
+                }
+            },
+            onError = {
+                Timber.e(it.message)
+                _uiState.update {
+                    MainUiState.Error(R.string.error_connection)
+                }
+            },
+            coroutineScope = viewModelScope
+        )
+    }
+
+    fun getUserFlow() {
+        getUser.execute(
+            params = NoParams,
+            onSuccess = { user ->
+                val isLogin = user.name.isNotEmpty()
+                        && user.userId.isNotEmpty()
+                        && user.token.isNotEmpty()
+                if (isLogin) {
+                    _uiState.update {
+                        MainUiState.OnUserIsLogin(user)
+                    }
+                } else {
+                    _uiState.update {
+                        MainUiState.OnUserNotLogin
+                    }
+                }
+            },
+            onError = {
+                Timber.e(it.message)
+            },
+            coroutineScope = viewModelScope
+        )
+    }
+
+    fun logoutFlow() {
+//        logout.execute(
+//            params = NoParams,
+//            onStart = {
+//                _uiState.update {
+//                    MainUiState.Loading(true)
+//                }
+//            },
+//            onSuccess = {
+//                _uiState.update {
+//                    MainUiState.OnSuccessLogout
+//                }
+//            },
+//            onError = {
+//                Timber.e(it.message)
+//                _uiState.update {
+//                    MainUiState.ErrorToast(R.string.error_logout)
+//                }
+//            },
+//            onCompletion = {
+//                _uiState.update {
+//                    MainUiState.Loading(false)
+//                }
+//            },
+//            coroutineScope = viewModelScope
+//        )
+    }
+
+    fun getStories(token: String) {
         getStories.execute(
             params = GetStories.Params(
                 "Bearer $token",
@@ -111,9 +186,9 @@ class MainViewModel @Inject constructor(
                 .subscribe(
                     { user ->
                         _user.value = user
-                        _isLogin.value = !(user.name.isNullOrEmpty()
-                                && user.userId.isNullOrEmpty()
-                                && user.token.isNullOrEmpty())
+                        _isLogin.value = !(user.name.isEmpty()
+                                && user.userId.isEmpty()
+                                && user.token.isEmpty())
                     },
                     {
                         Timber.e(it.message.toString())

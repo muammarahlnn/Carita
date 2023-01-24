@@ -6,6 +6,7 @@ import com.ardnn.carita.ui.addstory.AddStoryViewModel
 import com.ardnn.carita.ui.login.LoginViewModel
 import com.ardnn.carita.ui.main.MainViewModel
 import com.ardnn.carita.ui.maps.MapsViewModel
+import com.ardnn.carita.ui.onboarding.OnBoardingViewModel
 import com.ardnn.carita.ui.signup.SignUpViewModel
 import com.ardnn.carita.ui.util.ViewModelFactory
 import dagger.Binds
@@ -23,6 +24,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(MainViewModel::class)
     abstract fun bindMainViewModel(viewModel: MainViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(OnBoardingViewModel::class)
+    abstract fun bindOnBoardingViewModel(viewModel: OnBoardingViewModel): ViewModel
 
     @Binds
     @IntoMap

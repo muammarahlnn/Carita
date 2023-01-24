@@ -71,6 +71,9 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-reactivestreams-ktx:2.5.1"
     implementation "com.jakewharton.rxbinding2:rxbinding:2.0.0"
 
+    // data store
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
+
     // retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation "com.squareup.retrofit2:adapter-rxjava2:2.9.0"

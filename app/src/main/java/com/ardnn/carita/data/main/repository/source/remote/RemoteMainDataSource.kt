@@ -6,7 +6,6 @@ import androidx.paging.PagingData
 import com.ardnn.carita.data.main.repository.source.MainDataSource
 import com.ardnn.carita.data.main.repository.source.local.model.User
 import com.ardnn.carita.data.main.repository.source.remote.response.StoryResponse
-import io.reactivex.Observable
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -14,15 +13,11 @@ class RemoteMainDataSource @Inject constructor(
     private val api: StoryDicodingApi
 ) : MainDataSource {
 
-    override fun getHasBeenLaunch(): Observable<Boolean> {
+    override fun getHasBeenLaunch(): Flow<Boolean> {
         throw UnsupportedOperationException("No implementation on remote data")
     }
 
-    override fun saveHasBeenLaunch(): Observable<Unit> {
-        throw UnsupportedOperationException("No implementation on remote data")
-    }
-
-    override fun getUser(): Observable<User> {
+    override fun getUser(): Flow<User> {
         throw UnsupportedOperationException("No implementation on remote data")
     }
 
@@ -35,7 +30,7 @@ class RemoteMainDataSource @Inject constructor(
         ).flow
     }
 
-    override fun logout(): Observable<Unit> {
+    override suspend fun logout(): Flow<Unit> {
         throw UnsupportedOperationException("No implementation on remote data")
     }
 }

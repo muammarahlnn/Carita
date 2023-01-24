@@ -7,7 +7,6 @@ import com.ardnn.carita.data.main.repository.source.local.model.User
 import com.ardnn.carita.data.main.repository.source.remote.response.StoryResponse
 import com.ardnn.carita.data.util.Source
 import com.ardnn.carita.domain.main.repository.MainRepository
-import io.reactivex.Observable
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -23,18 +22,15 @@ class MainRepositoryImpl @Inject constructor(
         mainDataFactory.createData(Source.LOCAL)
     }
 
-    override fun getHasBeenLaunched(): Observable<Boolean> =
+    override fun getHasBeenLaunched(): Flow<Boolean> =
         localDataSource.getHasBeenLaunch()
 
-    override fun saveHasBeenLaunched(): Observable<Unit> =
-        localDataSource.saveHasBeenLaunch()
-
-    override fun getUser(): Observable<User> =
+    override fun getUser(): Flow<User> =
         localDataSource.getUser()
 
     override fun getStories(token: String): Flow<PagingData<StoryResponse>> =
         remoteDataSource.getStories(token)
 
-    override fun logout(): Observable<Unit> =
+    override suspend fun logout(): Flow<Unit> =
         localDataSource.logout()
 }

@@ -9,6 +9,5 @@ class GetUserUseCase @Inject constructor(
     private val mainRepository: MainRepository
 ) {
 
-    fun execute(): Observable<User> =
-        mainRepository.getUser()
+    fun execute(): Observable<User> = Observable.just(User("", "", ""))
 }
