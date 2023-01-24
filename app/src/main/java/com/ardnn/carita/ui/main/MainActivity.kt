@@ -102,7 +102,7 @@ class MainActivity : AppCompatActivity(), AddStoryFragment.OnSuccessPostStory {
     }
 
     private fun executeInitialUseCases() {
-        viewModel.getHasBeenLaunchedFlow()
+        viewModel.getHasBeenLaunched()
     }
 
     private fun initLifecycleActivity() {
@@ -157,7 +157,7 @@ class MainActivity : AppCompatActivity(), AddStoryFragment.OnSuccessPostStory {
             finish()
             startActivity(Intent(this@MainActivity, OnBoardingActivity::class.java))
         } else {
-            viewModel.getUserFlow()
+            viewModel.getUser()
         }
     }
 
