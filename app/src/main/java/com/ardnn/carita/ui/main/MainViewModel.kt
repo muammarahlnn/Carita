@@ -20,10 +20,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
-    private val getHasBeenLaunchedUseCase: GetHasBeenLaunchedUseCase,
     private val getHasBeenLaunched: GetHasBeenLaunched,
-    private val saveHasBeenLaunchedUseCase: SaveHasBeenLaunchedUseCase,
-    private val getUserUseCase: GetUserUseCase,
     private val getUser: GetUser,
     private val logoutUseCase: LogoutUseCase,
     private val logout: Logout,
@@ -33,7 +30,7 @@ class MainViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<MainUiState>(MainUiState.None)
     val uiState = _uiState.asStateFlow()
 
-    fun getHasBeenLaunchedFlow() {
+    fun getHasBeenLaunched() {
         getHasBeenLaunched.execute(
             params = NoParams,
             onSuccess = { hasBeenLaunched ->
@@ -51,7 +48,7 @@ class MainViewModel @Inject constructor(
         )
     }
 
-    fun getUserFlow() {
+    fun getUser() {
         getUser.execute(
             params = NoParams,
             onSuccess = { user ->
@@ -135,67 +132,6 @@ class MainViewModel @Inject constructor(
     }
 
     private val disposables = CompositeDisposable()
-
-    private val _hasBeenLaunched = MutableLiveData<Boolean>()
-    val hasBeenLaunched: LiveData<Boolean> get() = _hasBeenLaunched
-    fun getHasBeenLaunched() {
-        disposables.add(
-            getHasBeenLaunchedUseCase.execute()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    { hasBeenLaunched ->
-                        _hasBeenLaunched.postValue(hasBeenLaunched)
-                    },
-                    {
-                        Timber.d(it.message)
-                    }
-                )
-        )
-    }
-
-    fun saveHasBeenLaunched() {
-        disposables.add(
-            saveHasBeenLaunchedUseCase.execute()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    {
-                        // no implementation
-                    },
-                    {
-                        Timber.d(it.message)
-                    },
-                    {
-                        Timber.d("SaveHasBeenLaunchedUseCase complete")
-                    }
-                )
-        )
-    }
-
-    private val _isLogin = MutableLiveData<Boolean>()
-    val isLogin: LiveData<Boolean> get() = _isLogin
-
-    private val _user = MutableLiveData<User>()
-    val user: LiveData<User> get() = _user
-    fun getUser() {
-        disposables.add(
-            getUserUseCase.execute()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    { user ->
-                        _user.value = user
-                        _isLogin.value = !(user.name.isEmpty()
-                                && user.userId.isEmpty()
-                                && user.token.isEmpty())
-                    },
-                    {
-                        Timber.e(it.message.toString())
-                    }
-                )
-        )
-    }
 
     private val _logoutStatus = MutableLiveData<Status<String>>()
     val logoutStatus: LiveData<Status<String>> get() = _logoutStatus
