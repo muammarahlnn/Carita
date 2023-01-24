@@ -111,6 +111,8 @@ class LoginActivity : AppCompatActivity() {
         with(binding) {
             loading.root.visibility = View.VISIBLE
             btnLogin.isEnabled = false
+            etEmail.isEnabled = false
+            etPassword.isEnabled = false
         }
     }
 
@@ -118,6 +120,8 @@ class LoginActivity : AppCompatActivity() {
         with(binding) {
             loading.root.visibility = View.INVISIBLE
             btnLogin.isEnabled = true
+            etEmail.isEnabled = true
+            etPassword.isEnabled = true
         }
     }
 
