@@ -7,20 +7,21 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.ardnn.carita.CaritaApplication
 import com.ardnn.carita.R
 import com.ardnn.carita.data.login.repository.source.remote.request.LoginRequest
-import com.ardnn.carita.data.login.repository.source.remote.response.LoginResponse
-import com.ardnn.carita.data.main.repository.source.local.model.User
 import com.ardnn.carita.databinding.ActivityLoginBinding
 import com.ardnn.carita.ui.main.MainActivity
 import com.ardnn.carita.ui.signup.SignUpActivity
 import com.ardnn.carita.ui.util.ViewModelFactory
 import com.ardnn.carita.ui.util.showToast
-import com.ardnn.carita.vo.Status
 import com.jakewharton.rxbinding2.widget.RxTextView
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class LoginActivity : AppCompatActivity() {
@@ -43,7 +44,7 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupViewModel()
+        initLifecycleActivity()
         setupAction()
         validatingForm()
     }
@@ -57,53 +58,35 @@ class LoginActivity : AppCompatActivity() {
         (application as CaritaApplication).applicationComponent.inject(this)
     }
 
-    private fun setupViewModel() {
-        viewModel.response.observe(this) { statusResponse ->
-            processResponse(statusResponse)
-        }
-        viewModel.message.observe(this) { eventMessage ->
-            eventMessage.getContentIfNotHandled()?.let { message ->
-                showToast(this, message)
-            }
-        }
-        viewModel.isUserSuccessfullySaved.observe(this) { success ->
-            if (success) {
-                // to main
-                val toMain = Intent(this, MainActivity::class.java)
-                startActivity(toMain)
-                finishAffinity()
-            } else {
-                showError()
-            }
-        }
-    }
+    private fun initLifecycleActivity() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { state ->
+                    when (state) {
+                        is LoginUiState.Loading -> {
+                            if (state.isLoading) showLoading()
+                            else hideLoading()
+                        }
 
-    private fun processResponse(statusResponse: Status<LoginResponse>) {
-        when (statusResponse) {
-            is Status.Success -> {
-                hideLoading()
-                statusResponse.data?.let {
-                    saveUserToLocal(it)
+                        is LoginUiState.ErrorToast -> {
+                            showToast(this@LoginActivity, getString(state.stringId))
+                        }
+
+                        is LoginUiState.OnErrorPostLogin -> {
+                            showToast(this@LoginActivity, state.errorMessage)
+                        }
+
+                        is LoginUiState.OnSuccessSaveUser -> {
+                            finishAffinity()
+                            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                        }
+
+                        else -> {
+                            // no implementation
+                        }
+                    }
                 }
             }
-            is Status.Error -> {
-                hideLoading()
-            }
-
-            is Status.Loading -> {
-                showLoading()
-            }
-        }
-    }
-
-    private fun saveUserToLocal(loginResponse: LoginResponse) {
-        loginResponse.loginResult?.let {
-            val user = User(
-                it.userId.orEmpty(),
-                it.name.orEmpty(),
-                it.token.orEmpty()
-            )
-            viewModel.saveUser(user)
         }
     }
 
@@ -123,10 +106,6 @@ class LoginActivity : AppCompatActivity() {
             etEmail.isEnabled = true
             etPassword.isEnabled = true
         }
-    }
-
-    private fun showError() {
-        showToast(this, "An error occurred")
     }
 
     private fun setupAction() {

@@ -7,7 +7,7 @@ import com.ardnn.carita.data.login.repository.source.remote.response.LoginRespon
 import com.ardnn.carita.data.main.repository.source.local.model.User
 import com.ardnn.carita.data.util.Source
 import com.ardnn.carita.domain.login.repository.LoginRepository
-import io.reactivex.Observable
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class LoginRepositoryImpl @Inject constructor(
@@ -22,9 +22,10 @@ class LoginRepositoryImpl @Inject constructor(
         loginDataFactory.createData(Source.REMOTE)
     }
 
-    override fun postLogin(request: LoginRequest): Observable<LoginResponse> =
+    override fun postLogin(request: LoginRequest): Flow<LoginResponse> =
         remoteLoginDataSource.postLogin(request)
 
-    override fun saveUser(user: User): Observable<Unit> =
+    override suspend fun saveUser(user: User) {
         localLoginDataSource.saveUser(user)
+    }
 }

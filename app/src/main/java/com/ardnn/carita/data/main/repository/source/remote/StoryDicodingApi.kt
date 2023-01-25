@@ -19,9 +19,9 @@ interface StoryDicodingApi {
     ): Observable<RegisterResponse>
 
     @POST(LOGIN)
-    fun postLogin(
+    suspend fun postLogin(
         @Body request: LoginRequest
-    ): Observable<LoginResponse>
+    ): LoginResponse
 
     @GET(STORIES)
     suspend fun getStories(

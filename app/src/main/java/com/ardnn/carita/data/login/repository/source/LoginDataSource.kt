@@ -3,11 +3,11 @@ package com.ardnn.carita.data.login.repository.source
 import com.ardnn.carita.data.login.repository.source.remote.request.LoginRequest
 import com.ardnn.carita.data.login.repository.source.remote.response.LoginResponse
 import com.ardnn.carita.data.main.repository.source.local.model.User
-import io.reactivex.Observable
+import kotlinx.coroutines.flow.Flow
 
 interface LoginDataSource {
 
-    fun postLogin(request: LoginRequest): Observable<LoginResponse>
+    fun postLogin(request: LoginRequest): Flow<LoginResponse>
 
-    fun saveUser(user: User): Observable<Unit>
+    suspend fun saveUser(user: User)
 }
