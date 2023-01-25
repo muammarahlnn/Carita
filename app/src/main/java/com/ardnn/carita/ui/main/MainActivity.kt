@@ -26,7 +26,6 @@ import com.ardnn.carita.ui.maps.MapsActivity
 import com.ardnn.carita.ui.onboarding.OnBoardingActivity
 import com.ardnn.carita.ui.util.ViewModelFactory
 import com.ardnn.carita.ui.util.showToast
-import com.ardnn.carita.vo.Status
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -68,7 +67,6 @@ class MainActivity : AppCompatActivity(), AddStoryFragment.OnSuccessPostStory {
             }
 
             R.id.nav_logout -> {
-//                logout()
                 viewModel.logoutFlow()
             }
         }
@@ -154,8 +152,8 @@ class MainActivity : AppCompatActivity(), AddStoryFragment.OnSuccessPostStory {
 
     private fun handleOnSuccessGetHasBeenLaunched(hasBeenLaunched: Boolean) {
         if (!hasBeenLaunched) {
-            finish()
             startActivity(Intent(this@MainActivity, OnBoardingActivity::class.java))
+            finish()
         } else {
             viewModel.getUser()
         }
@@ -205,32 +203,6 @@ class MainActivity : AppCompatActivity(), AddStoryFragment.OnSuccessPostStory {
     private fun handleOnSuccessLogout() {
         startActivity(Intent(this, LoginActivity::class.java))
         finish()
-    }
-
-    private fun processStatus(
-        statusStories: Status<*>,
-        onSuccess: () -> Unit,
-        onError: () -> Unit = { }
-    ) {
-        when (statusStories) {
-            is Status.Success -> {
-                hideLoading()
-                onSuccess()
-            }
-
-            is Status.Error -> {
-                hideLoading()
-                onError()
-            }
-
-            is Status.Loading -> {
-                showLoading()
-            }
-        }
-    }
-
-    private fun logout() {
-       viewModel.logout()
     }
 
     private fun getStories() {
