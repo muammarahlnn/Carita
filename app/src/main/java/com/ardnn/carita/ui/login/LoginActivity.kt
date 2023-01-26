@@ -7,9 +7,6 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.ardnn.carita.CaritaApplication
 import com.ardnn.carita.R
 import com.ardnn.carita.data.login.repository.source.remote.request.LoginRequest
@@ -17,11 +14,11 @@ import com.ardnn.carita.databinding.ActivityLoginBinding
 import com.ardnn.carita.ui.main.MainActivity
 import com.ardnn.carita.ui.signup.SignUpActivity
 import com.ardnn.carita.ui.util.ViewModelFactory
+import com.ardnn.carita.ui.util.collectLifecycleFlow
 import com.ardnn.carita.ui.util.showToast
 import com.jakewharton.rxbinding2.widget.RxTextView
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class LoginActivity : AppCompatActivity() {
@@ -44,7 +41,7 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initLifecycleActivity()
+        initLifecycleUiState()
         setupAction()
         validatingForm()
     }
@@ -58,33 +55,29 @@ class LoginActivity : AppCompatActivity() {
         (application as CaritaApplication).applicationComponent.inject(this)
     }
 
-    private fun initLifecycleActivity() {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect { state ->
-                    when (state) {
-                        is LoginUiState.Loading -> {
-                            if (state.isLoading) showLoading()
-                            else hideLoading()
-                        }
+    private fun initLifecycleUiState() {
+        collectLifecycleFlow(viewModel.uiState) { state ->
+            when (state) {
+                is LoginUiState.Loading -> {
+                    if (state.isLoading) showLoading()
+                    else hideLoading()
+                }
 
-                        is LoginUiState.ErrorToast -> {
-                            showToast(this@LoginActivity, getString(state.stringId))
-                        }
+                is LoginUiState.ErrorToast -> {
+                    showToast(this@LoginActivity, getString(state.stringId))
+                }
 
-                        is LoginUiState.OnErrorPostLogin -> {
-                            showToast(this@LoginActivity, state.errorMessage)
-                        }
+                is LoginUiState.OnErrorPostLogin -> {
+                    showToast(this@LoginActivity, state.errorMessage)
+                }
 
-                        is LoginUiState.OnSuccessSaveUser -> {
-                            finishAffinity()
-                            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-                        }
+                is LoginUiState.OnSuccessSaveUser -> {
+                    finishAffinity()
+                    startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                }
 
-                        else -> {
-                            // no implementation
-                        }
-                    }
+                else -> {
+                    // no implementation
                 }
             }
         }

@@ -8,9 +8,6 @@ import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,8 +22,8 @@ import com.ardnn.carita.ui.login.LoginActivity
 import com.ardnn.carita.ui.maps.MapsActivity
 import com.ardnn.carita.ui.onboarding.OnBoardingActivity
 import com.ardnn.carita.ui.util.ViewModelFactory
+import com.ardnn.carita.ui.util.collectLifecycleFlow
 import com.ardnn.carita.ui.util.showToast
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), AddStoryFragment.OnSuccessPostStory {
@@ -50,7 +47,7 @@ class MainActivity : AppCompatActivity(), AddStoryFragment.OnSuccessPostStory {
         setContentView(binding.root)
 
         executeInitialUseCases()
-        initLifecycleActivity()
+        initLifecycleUiState()
         setupToolbar()
         setupAction()
     }
@@ -103,48 +100,44 @@ class MainActivity : AppCompatActivity(), AddStoryFragment.OnSuccessPostStory {
         viewModel.getHasBeenLaunched()
     }
 
-    private fun initLifecycleActivity() {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect { state ->
-                    when (state) {
-                        is MainUiState.Loading -> {
-                            if (state.isLoading) showLoading()
-                            else hideLoading()
-                        }
+    private fun initLifecycleUiState() {
+        collectLifecycleFlow(viewModel.uiState) { state ->
+            when (state) {
+                is MainUiState.Loading -> {
+                    if (state.isLoading) showLoading()
+                    else hideLoading()
+                }
 
-                        is MainUiState.Error -> {
-                            showError()
-                        }
+                is MainUiState.Error -> {
+                    showError()
+                }
 
-                        is MainUiState.ErrorToast -> {
-                            showToast(this@MainActivity, getString(state.stringId))
-                        }
+                is MainUiState.ErrorToast -> {
+                    showToast(this@MainActivity, getString(state.stringId))
+                }
 
-                        is MainUiState.OnSuccessGetHasBeenLaunched -> {
-                            handleOnSuccessGetHasBeenLaunched(state.hasBeenLaunched)
-                        }
+                is MainUiState.OnSuccessGetHasBeenLaunched -> {
+                    handleOnSuccessGetHasBeenLaunched(state.hasBeenLaunched)
+                }
 
-                        is MainUiState.OnUserIsLogin -> {
-                            handleOnUserIsLogin(state.user)
-                        }
+                is MainUiState.OnUserIsLogin -> {
+                    handleOnUserIsLogin(state.user)
+                }
 
-                        is MainUiState.OnUserNotLogin -> {
-                            handleUserNotLogin()
-                        }
+                is MainUiState.OnUserNotLogin -> {
+                    handleUserNotLogin()
+                }
 
-                        is MainUiState.OnSuccessGetStories -> {
-                            handleOnSuccessGetStories(state.stories)
-                        }
+                is MainUiState.OnSuccessGetStories -> {
+                    handleOnSuccessGetStories(state.stories)
+                }
 
-                        is MainUiState.OnSuccessLogout -> {
-                            handleOnSuccessLogout()
-                        }
+                is MainUiState.OnSuccessLogout -> {
+                    handleOnSuccessLogout()
+                }
 
-                        else -> {
-                            // no op
-                        }
-                    }
+                else -> {
+                    // no op
                 }
             }
         }

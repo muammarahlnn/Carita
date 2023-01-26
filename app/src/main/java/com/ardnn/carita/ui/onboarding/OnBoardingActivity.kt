@@ -4,16 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.ardnn.carita.CaritaApplication
 import com.ardnn.carita.databinding.ActivityOnBoardingBinding
 import com.ardnn.carita.ui.login.LoginActivity
 import com.ardnn.carita.ui.util.ViewModelFactory
+import com.ardnn.carita.ui.util.collectLifecycleFlow
 import com.ardnn.carita.ui.util.showToast
-import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 class OnBoardingActivity : AppCompatActivity() {
@@ -34,7 +30,7 @@ class OnBoardingActivity : AppCompatActivity() {
         binding = ActivityOnBoardingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initLifecycleActivity()
+        initLifecycleUiState()
         setupAction()
     }
 
@@ -48,23 +44,19 @@ class OnBoardingActivity : AppCompatActivity() {
         }
     }
 
-    private fun initLifecycleActivity() {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collect { state ->
-                    when (state) {
-                        is OnBoardingUiState.ErrorToast -> {
-                            showToast(this@OnBoardingActivity, getString(state.stringId))
-                        }
+    private fun initLifecycleUiState() {
+        collectLifecycleFlow(viewModel.uiState) { state ->
+            when (state) {
+                is OnBoardingUiState.ErrorToast -> {
+                    showToast(this@OnBoardingActivity, getString(state.stringId))
+                }
 
-                        is OnBoardingUiState.OnSuccessSaveHasBeenLaunched -> {
-                            handleOnSuccessHasBeenLaunched()
-                        }
+                is OnBoardingUiState.OnSuccessSaveHasBeenLaunched -> {
+                    handleOnSuccessHasBeenLaunched()
+                }
 
-                        else -> {
-                            // no - op
-                        }
-                    }
+                else -> {
+                    // no - op
                 }
             }
         }
