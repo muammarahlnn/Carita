@@ -76,22 +76,20 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun showLoading() {
-        with(binding) {
-            loading.root.visibility = View.VISIBLE
-            btnContinue.isEnabled = false
-            etName.isEnabled = false
-            etEmail.isEnabled = false
-            etPassword.isEnabled = false
-        }
+        binding.loading.root.visibility = View.VISIBLE
+        enablingViews(false)
     }
 
     private fun hideLoading() {
+        binding.loading.root.visibility = View.INVISIBLE
+        enablingViews(true)
+    }
+
+    private fun enablingViews(isEnable: Boolean) {
         with(binding) {
-            loading.root.visibility = View.INVISIBLE
-            btnContinue.isEnabled = true
-            etName.isEnabled = true
-            etEmail.isEnabled = true
-            etPassword.isEnabled = true
+            listOf<View>(etName, etEmail, etPassword, btnContinue, tvLogin).forEach {
+                it.isEnabled = isEnable
+            }
         }
     }
 
