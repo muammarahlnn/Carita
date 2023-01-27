@@ -35,9 +35,11 @@
     <string name="error_system_busy">Sistem sedang sibuk.</string>
     <string name="error_connection">Tolong cek koneksi internet Anda.</string>
     <string name="error_logout">Tidak dapat logout untuk saaat ini, mohon coba lagi.</string>
+    <string name="error_register">Tidak dapat daftar untuk saat ini, mohon coba lagi.</string>
     <string name="language">Bahasa</string>
     <string name="logout">Keluar</string>
     <string name="retry">Coba lagi</string>
     <string name="error_message_location">Lokasi tidak ditemukan. Coba lagi.</string>
     <string name="your_location">Lokasi kamu</string>
+    <string name="success_register">Akun kamu berhasil dibuat</string>
 </resources>

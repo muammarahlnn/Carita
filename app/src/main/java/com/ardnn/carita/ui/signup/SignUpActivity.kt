@@ -8,11 +8,10 @@ import androidx.core.content.ContextCompat
 import com.ardnn.carita.CaritaApplication
 import com.ardnn.carita.R
 import com.ardnn.carita.data.signup.repository.source.remote.request.RegisterRequest
-import com.ardnn.carita.data.signup.repository.source.remote.response.RegisterResponse
 import com.ardnn.carita.databinding.ActivitySignUpBinding
 import com.ardnn.carita.ui.util.ViewModelFactory
+import com.ardnn.carita.ui.util.collectLifecycleFlow
 import com.ardnn.carita.ui.util.showToast
-import com.ardnn.carita.vo.Status
 import com.jakewharton.rxbinding2.widget.RxTextView
 import io.reactivex.Observable.combineLatest
 import io.reactivex.disposables.CompositeDisposable
@@ -38,7 +37,7 @@ class SignUpActivity : AppCompatActivity() {
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupViewModel()
+        initLifecycleUiState()
         setupAction()
         validatingForm()
     }
@@ -52,29 +51,26 @@ class SignUpActivity : AppCompatActivity() {
         (application as CaritaApplication).applicationComponent.inject(this)
     }
 
-    private fun setupViewModel() {
-        viewModel.response.observe(this) { statusResponse ->
-            processResponse(statusResponse)
-        }
-        viewModel.message.observe(this) { eventMessage ->
-            eventMessage.getContentIfNotHandled()?.let { message ->
-                showToast(this, message)
-            }
-        }
-    }
+    private fun initLifecycleUiState() {
+        collectLifecycleFlow(viewModel.uiState) { state ->
+            when (state) {
+                is SignUpUiState.Loading -> {
+                    if (state.isLoading) showLoading()
+                    else hideLoading()
+                }
 
-    private fun processResponse(statusResponse: Status<RegisterResponse>) {
-        when (statusResponse) {
-            is Status.Success -> {
-                finish()
-            }
+                is SignUpUiState.OnSuccessRegisterUser -> {
+                    showToast(this@SignUpActivity, getString(R.string.success_register))
+                    finish()
+                }
 
-            is Status.Error -> {
-                hideLoading()
-            }
+                is SignUpUiState.OnErrorRegisterUser -> {
+                    showToast(this@SignUpActivity, state.errorMessage)
+                }
 
-            is Status.Loading -> {
-                showLoading()
+                else -> {
+                    // no implementation
+                }
             }
         }
     }

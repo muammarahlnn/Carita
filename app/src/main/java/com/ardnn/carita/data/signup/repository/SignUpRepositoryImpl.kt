@@ -6,16 +6,17 @@ import com.ardnn.carita.data.signup.repository.source.remote.request.RegisterReq
 import com.ardnn.carita.data.signup.repository.source.remote.response.RegisterResponse
 import com.ardnn.carita.data.util.Source
 import com.ardnn.carita.domain.signup.repository.SignUpRepository
-import io.reactivex.Observable
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class SignUpRepositoryImpl @Inject constructor(
     private val signUpDataFactory: SignUpDataFactory
 ) : SignUpRepository {
 
-    override fun postRegister(request: RegisterRequest): Observable<RegisterResponse> =
-        createRemoteSignUpDataSource().postRegister(request)
-
-    private fun createRemoteSignUpDataSource(): SignUpDataSource =
+    private val remoteDataSource: SignUpDataSource by lazy {
         signUpDataFactory.createData(Source.REMOTE)
+    }
+
+    override fun postRegister(request: RegisterRequest): Flow<RegisterResponse> =
+        remoteDataSource.postRegister(request)
 }

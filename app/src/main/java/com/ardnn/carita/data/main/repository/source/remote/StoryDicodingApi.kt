@@ -14,9 +14,9 @@ import retrofit2.http.*
 interface StoryDicodingApi {
 
     @POST(REGISTER)
-    fun postRegister(
+    suspend fun postRegister(
         @Body request: RegisterRequest
-    ): Observable<RegisterResponse>
+    ): RegisterResponse
 
     @POST(LOGIN)
     suspend fun postLogin(

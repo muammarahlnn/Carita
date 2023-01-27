@@ -35,9 +35,11 @@
     <string name="error_system_busy">System is busy.</string>
     <string name="error_connection">Please check your internet connection.</string>
     <string name="error_logout">Can\`t logout right now, please try again later.</string>
+    <string name="error_register">Can\`t register right now, please try again later.</string>
     <string name="language">Language</string>
     <string name="logout">Logout</string>
     <string name="retry">Retry</string>
     <string name="error_message_location">Location not found. Try again.</string>
     <string name="your_location">Your location</string>
+    <string name="success_register">You account is successfully created</string>
 </resources>
