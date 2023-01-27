@@ -16,6 +16,7 @@ import com.ardnn.carita.R
 import com.ardnn.carita.data.main.repository.source.local.model.User
 import com.ardnn.carita.data.main.repository.source.remote.response.StoryResponse
 import com.ardnn.carita.databinding.ActivityMainBinding
+import com.ardnn.carita.ui.addstory.AddStoryEventListener
 import com.ardnn.carita.ui.addstory.AddStoryFragment
 import com.ardnn.carita.ui.detail.DetailActivity
 import com.ardnn.carita.ui.login.LoginActivity
@@ -26,7 +27,7 @@ import com.ardnn.carita.ui.util.collectLifecycleFlow
 import com.ardnn.carita.ui.util.showToast
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), AddStoryFragment.OnSuccessPostStory {
+class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -81,12 +82,8 @@ class MainActivity : AppCompatActivity(), AddStoryFragment.OnSuccessPostStory {
 
     private fun setupAction() {
         binding.fabAddStory.setOnClickListener {
-            AddStoryFragment().run {
-                arguments = Bundle().apply {
-                    putString(AddStoryFragment.EXTRA_TOKEN, user.token)
-                }
-                show(supportFragmentManager, "")
-            }
+            AddStoryFragment.newInstance(user.token, createAddStoryEventListener())
+                .show(supportFragmentManager, "")
         }
         binding.fabMap.setOnClickListener {
             startActivity(
@@ -218,7 +215,11 @@ class MainActivity : AppCompatActivity(), AddStoryFragment.OnSuccessPostStory {
         binding.fabMap.visibility = View.VISIBLE
     }
 
-    override fun onSuccess() {
-        getStories()
+    private fun createAddStoryEventListener(): AddStoryEventListener {
+        return object : AddStoryEventListener {
+            override fun onSuccessPostStory() {
+                getStories()
+            }
+        }
     }
 }

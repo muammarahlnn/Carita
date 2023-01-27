@@ -34,24 +34,23 @@ class AddStoryFragment : BottomSheetDialogFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
-    private lateinit var onSuccessPostStory: OnSuccessPostStory
-
     private val viewModel: AddStoryViewModel by viewModels {
         viewModelFactory
     }
 
-    private var file: File? = null
-
     private var _binding: FragmentAddStoryBinding? = null
 
     private val binding get() = _binding
+
+    private var addStoryEventListener: AddStoryEventListener? = null
+
+    private var file: File? = null
 
     private var token = ""
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         (requireActivity().application as CaritaApplication).applicationComponent.inject(this)
-        onSuccessPostStory = context as OnSuccessPostStory
     }
 
     override fun onCreateView(
@@ -102,8 +101,7 @@ class AddStoryFragment : BottomSheetDialogFragment() {
                     hideLoading()
                     showToast(context as Context, "Story created successfully")
                     dismiss()
-//                    (activity as MainActivity).getStories()
-                    onSuccessPostStory.onSuccess()
+                    addStoryEventListener?.onSuccessPostStory()
                 }
 
                 is Status.Error -> {
@@ -202,18 +200,26 @@ class AddStoryFragment : BottomSheetDialogFragment() {
         }
     }
 
-    interface OnSuccessPostStory {
-
-        fun onSuccess()
-    }
-
     companion object {
 
-        const val EXTRA_TOKEN = "extra_token"
+        private const val EXTRA_TOKEN = "extra_token"
         const val EXTRA_PICTURE = "extra_picture"
         const val EXTRA_IS_BACK_CAMERA = "extra_is_back_camera"
         const val CAMERA_X_RESULT = 200
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
         private const val REQUEST_CODE_PERMISSIONS = 10
+
+        fun newInstance(
+            token: String,
+            addStoryEventListener: AddStoryEventListener
+        ): AddStoryFragment {
+            return AddStoryFragment().apply {
+                arguments = Bundle().apply {
+                    putString(EXTRA_TOKEN, token)
+                }
+            }.also {
+                it.addStoryEventListener = addStoryEventListener
+            }
+        }
     }
 }
