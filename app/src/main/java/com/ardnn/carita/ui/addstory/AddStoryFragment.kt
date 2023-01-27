@@ -137,12 +137,12 @@ class AddStoryFragment : BottomSheetDialogFragment() {
     }
 
     private fun showLoading() {
-        binding?.loading?.visibility = View.VISIBLE
+        binding?.loading?.root?.visibility = View.VISIBLE
         enablingViews(false)
     }
 
     private fun hideLoading() {
-        binding?.loading?.visibility = View.GONE
+        binding?.loading?.root?.visibility = View.INVISIBLE
         enablingViews(true)
     }
 
