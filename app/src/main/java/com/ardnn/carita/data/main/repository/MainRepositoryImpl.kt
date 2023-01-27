@@ -31,6 +31,7 @@ class MainRepositoryImpl @Inject constructor(
     override fun getStories(token: String): Flow<PagingData<StoryResponse>> =
         remoteDataSource.getStories(token)
 
-    override suspend fun logout(): Flow<Unit> =
+    override suspend fun logout() {
         localDataSource.logout()
+    }
 }

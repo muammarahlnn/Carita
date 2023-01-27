@@ -1,18 +1,13 @@
 package com.ardnn.carita.ui.main
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ardnn.carita.R
-import com.ardnn.carita.data.main.repository.source.local.model.User
 import com.ardnn.carita.domain.base.NoParams
-import com.ardnn.carita.domain.main.interactor.*
-import com.ardnn.carita.domain.onboarding.interactor.SaveHasBeenLaunched
-import com.ardnn.carita.vo.Status
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
+import com.ardnn.carita.domain.main.interactor.GetHasBeenLaunched
+import com.ardnn.carita.domain.main.interactor.GetStories
+import com.ardnn.carita.domain.main.interactor.GetUser
+import com.ardnn.carita.domain.main.interactor.Logout
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -22,7 +17,6 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val getHasBeenLaunched: GetHasBeenLaunched,
     private val getUser: GetUser,
-    private val logoutUseCase: LogoutUseCase,
     private val logout: Logout,
     private val getStories: GetStories
 ) : ViewModel() {
@@ -55,6 +49,7 @@ class MainViewModel @Inject constructor(
                 val isLogin = user.name.isNotEmpty()
                         && user.userId.isNotEmpty()
                         && user.token.isNotEmpty()
+
                 if (isLogin) {
                     _uiState.update {
                         MainUiState.OnUserIsLogin(user)
@@ -72,32 +67,32 @@ class MainViewModel @Inject constructor(
         )
     }
 
-    fun logoutFlow() {
-//        logout.execute(
-//            params = NoParams,
-//            onStart = {
-//                _uiState.update {
-//                    MainUiState.Loading(true)
-//                }
-//            },
-//            onSuccess = {
-//                _uiState.update {
-//                    MainUiState.OnSuccessLogout
-//                }
-//            },
-//            onError = {
-//                Timber.e(it.message)
-//                _uiState.update {
-//                    MainUiState.ErrorToast(R.string.error_logout)
-//                }
-//            },
-//            onCompletion = {
-//                _uiState.update {
-//                    MainUiState.Loading(false)
-//                }
-//            },
-//            coroutineScope = viewModelScope
-//        )
+    fun logout() {
+        logout.execute(
+            params = NoParams,
+            onStart = {
+                _uiState.update {
+                    MainUiState.Loading(true)
+                }
+            },
+            onSuccess = {
+                _uiState.update {
+                    MainUiState.OnSuccessLogout
+                }
+            },
+            onError = {
+                Timber.e(it.message)
+                _uiState.update {
+                    MainUiState.ErrorToast(R.string.error_logout)
+                }
+            },
+            onCompletion = {
+                _uiState.update {
+                    MainUiState.Loading(false)
+                }
+            },
+            coroutineScope = viewModelScope
+        )
     }
 
     fun getStories(token: String) {
@@ -129,32 +124,5 @@ class MainViewModel @Inject constructor(
             },
             coroutineScope = viewModelScope
         )
-    }
-
-    private val disposables = CompositeDisposable()
-
-    private val _logoutStatus = MutableLiveData<Status<String>>()
-    val logoutStatus: LiveData<Status<String>> get() = _logoutStatus
-    fun logout() {
-        disposables.add(
-            logoutUseCase.execute()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe {
-                    _logoutStatus.value = Status.Loading()
-                }
-                .subscribe(
-                    {
-                        _logoutStatus.value = Status.Success("Logout success")
-                    },
-                    {
-                        _logoutStatus.value = Status.Error("An error occurred")
-                    }
-                )
-        )
-    }
-
-    override fun onCleared() {
-        disposables.clear()
     }
 }

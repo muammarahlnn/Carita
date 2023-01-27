@@ -5,7 +5,6 @@ import com.ardnn.carita.data.main.repository.source.MainDataSource
 import com.ardnn.carita.data.main.repository.source.local.model.User
 import com.ardnn.carita.data.main.repository.source.remote.response.StoryResponse
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 
 class LocalMainDataSource @Inject constructor(
@@ -22,6 +21,7 @@ class LocalMainDataSource @Inject constructor(
         throw UnsupportedOperationException("No implementation on local data")
     }
 
-    override suspend fun logout(): Flow<Unit> =
-        flowOf(mainPreferences.logout())
+    override suspend fun logout() {
+        mainPreferences.logout()
+    }
 }

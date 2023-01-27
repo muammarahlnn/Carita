@@ -13,5 +13,5 @@ interface MainDataSource {
 
     fun getStories(token: String): Flow<PagingData<StoryResponse>>
 
-    suspend fun logout(): Flow<Unit>
+    suspend fun logout()
 }

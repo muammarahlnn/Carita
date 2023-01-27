@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity(), AddStoryFragment.OnSuccessPostStory {
             }
 
             R.id.nav_logout -> {
-                viewModel.logoutFlow()
+                viewModel.logout()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -194,8 +194,8 @@ class MainActivity : AppCompatActivity(), AddStoryFragment.OnSuccessPostStory {
     }
 
     private fun handleOnSuccessLogout() {
-        startActivity(Intent(this, LoginActivity::class.java))
         finish()
+        startActivity(Intent(this, LoginActivity::class.java))
     }
 
     private fun getStories() {

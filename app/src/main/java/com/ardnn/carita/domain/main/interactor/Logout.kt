@@ -1,10 +1,10 @@
 package com.ardnn.carita.domain.main.interactor
 
-import com.ardnn.carita.domain.base.BaseSuspendUseCase
 import com.ardnn.carita.domain.base.BaseUseCase
 import com.ardnn.carita.domain.base.NoParams
 import com.ardnn.carita.domain.main.repository.MainRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 
@@ -14,8 +14,10 @@ import javax.inject.Inject
  */
 class Logout @Inject constructor(
     private val mainRepository: MainRepository
-) : BaseSuspendUseCase<NoParams>() {
+) : BaseUseCase<NoParams, Unit>() {
 
-    override suspend fun buildUseCase(params: NoParams): Flow<Unit> =
-        mainRepository.logout()
+    override fun buildUseCase(params: NoParams): Flow<Unit> =
+        flow {
+            emit(mainRepository.logout())
+        }
 }

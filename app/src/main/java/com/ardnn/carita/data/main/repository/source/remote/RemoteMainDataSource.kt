@@ -30,7 +30,7 @@ class RemoteMainDataSource @Inject constructor(
         ).flow
     }
 
-    override suspend fun logout(): Flow<Unit> {
+    override suspend fun logout() {
         throw UnsupportedOperationException("No implementation on remote data")
     }
 }
