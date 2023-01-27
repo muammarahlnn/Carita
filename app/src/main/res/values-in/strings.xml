@@ -42,4 +42,5 @@
     <string name="error_message_location">Lokasi tidak ditemukan. Coba lagi.</string>
     <string name="your_location">Lokasi kamu</string>
     <string name="success_register">Akun kamu berhasil dibuat</string>
+    <string name="success_add_story">Cerita berhasil dibuat</string>
 </resources>

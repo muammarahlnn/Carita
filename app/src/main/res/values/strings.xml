@@ -42,4 +42,5 @@
     <string name="error_message_location">Location not found. Try again.</string>
     <string name="your_location">Your location</string>
     <string name="success_register">You account is successfully created</string>
+    <string name="success_add_story">Story created successfully</string>
 </resources>

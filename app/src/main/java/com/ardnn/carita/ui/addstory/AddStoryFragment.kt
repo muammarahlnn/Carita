@@ -17,9 +17,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import com.ardnn.carita.CaritaApplication
+import com.ardnn.carita.R
 import com.ardnn.carita.databinding.FragmentAddStoryBinding
 import com.ardnn.carita.ui.util.*
-import com.ardnn.carita.vo.Status
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -71,8 +71,8 @@ class AddStoryFragment : BottomSheetDialogFragment() {
                     REQUEST_CODE_PERMISSIONS
                 )
             }
+            initLifecycleUiState()
             setupBundle()
-            setupViewModel()
             setupActions()
         }
     }
@@ -88,40 +88,35 @@ class AddStoryFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private fun setupBundle() {
-        arguments?.let {
-            token = it.getString(EXTRA_TOKEN, "")
-        }
-    }
+    private fun initLifecycleUiState() {
+        collectLifecycleFlow(viewModel.uiState) { state ->
+            when (state) {
+                is AddStoryUiState.Loading -> {
+                    if (state.isLoading) showLoading()
+                    else hideLoading()
+                }
 
-    private fun setupViewModel() {
-        viewModel.addStory.observe(this) { addStoryResponse ->
-            when (addStoryResponse) {
-                is Status.Success -> {
-                    hideLoading()
-                    showToast(context as Context, "Story created successfully")
+                is AddStoryUiState.OnSuccessAddStory -> {
+                    showToast(context as Context, getString(R.string.success_add_story))
                     dismiss()
                     addStoryEventListener?.onSuccessPostStory()
                 }
 
-                is Status.Error -> {
-                    hideLoading()
-                    showToast(context as Context, addStoryResponse.message.toString())
+                is AddStoryUiState.OnErrorPostStory -> {
+                    showToast(context as Context, state.errorMessage)
                 }
 
-                is Status.Loading -> {
-                    showLoading()
+                else -> {
+                    // no op
                 }
             }
         }
     }
 
-    private fun showLoading() {
-        binding?.loading?.visibility = View.VISIBLE
-    }
-
-    private fun hideLoading() {
-        binding?.loading?.visibility = View.GONE
+    private fun setupBundle() {
+        arguments?.let {
+            token = it.getString(EXTRA_TOKEN, "")
+        }
     }
 
     private fun setupActions() {
@@ -137,6 +132,24 @@ class AddStoryFragment : BottomSheetDialogFragment() {
             }
             btnUpload.setOnClickListener {
                 uploadStory()
+            }
+        }
+    }
+
+    private fun showLoading() {
+        binding?.loading?.visibility = View.VISIBLE
+        enablingViews(false)
+    }
+
+    private fun hideLoading() {
+        binding?.loading?.visibility = View.GONE
+        enablingViews(true)
+    }
+
+    private fun enablingViews(isEnabled: Boolean) {
+        binding?.run {
+            listOf(btnClose, btnGallery, btnCamera, btnUpload, etCaption).forEach {
+                it.isEnabled = isEnabled
             }
         }
     }

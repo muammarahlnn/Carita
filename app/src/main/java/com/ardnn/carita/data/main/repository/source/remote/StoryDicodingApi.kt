@@ -6,7 +6,6 @@ import com.ardnn.carita.data.login.repository.source.remote.response.LoginRespon
 import com.ardnn.carita.data.main.repository.source.remote.response.StoriesResponse
 import com.ardnn.carita.data.signup.repository.source.remote.request.RegisterRequest
 import com.ardnn.carita.data.signup.repository.source.remote.response.RegisterResponse
-import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.*
@@ -33,11 +32,11 @@ interface StoryDicodingApi {
 
     @Multipart
     @POST(STORIES)
-    fun postStory(
+    suspend fun postStory(
         @Header(AUTHORIZATION) token: String,
         @Part file: MultipartBody.Part,
         @Part(DESCRIPTION) description: RequestBody
-    ): Observable<AddStoryResponse>
+    ): AddStoryResponse
 
     companion object {
 
