@@ -79,6 +79,9 @@ class SignUpActivity : AppCompatActivity() {
         with(binding) {
             loading.root.visibility = View.VISIBLE
             btnContinue.isEnabled = false
+            etName.isEnabled = false
+            etEmail.isEnabled = false
+            etPassword.isEnabled = false
         }
     }
 
@@ -86,6 +89,9 @@ class SignUpActivity : AppCompatActivity() {
         with(binding) {
             loading.root.visibility = View.INVISIBLE
             btnContinue.isEnabled = true
+            etName.isEnabled = true
+            etEmail.isEnabled = true
+            etPassword.isEnabled = true
         }
     }
 
