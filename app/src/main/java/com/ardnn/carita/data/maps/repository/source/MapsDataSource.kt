@@ -1,9 +1,9 @@
 package com.ardnn.carita.data.maps.repository.source
 
 import com.ardnn.carita.data.main.repository.source.remote.response.StoriesResponse
-import io.reactivex.Observable
+import kotlinx.coroutines.flow.Flow
 
 interface MapsDataSource {
 
-    fun getStories(token: String): Observable<StoriesResponse>
+    fun getStories(token: String): Flow<StoriesResponse>
 }

@@ -14,6 +14,7 @@ import com.ardnn.carita.data.main.repository.source.local.model.User
 import com.ardnn.carita.data.main.repository.source.remote.response.StoryResponse
 import com.ardnn.carita.databinding.ActivityMapsBinding
 import com.ardnn.carita.ui.util.ViewModelFactory
+import com.ardnn.carita.ui.util.collectLifecycleFlow
 import com.ardnn.carita.ui.util.showToast
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -71,7 +72,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         setupBundle()
         setupMaps()
-        setupViewModel()
+        executeInitialUseCases()
+        initLifecycleUiState()
     }
 
     private fun setupInject() {
@@ -90,14 +92,26 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
     }
 
-    private fun setupViewModel() {
-        viewModel.getStories(user.token.toString())
-        subscribeViewModel()
+    private fun executeInitialUseCases() {
+        viewModel.getStories(user.token)
     }
 
-    private fun subscribeViewModel() {
-        viewModel.stories.observe(this) { stories ->
-            showStoriesLocationMarker(stories)
+    private fun initLifecycleUiState() {
+        collectLifecycleFlow(viewModel.uiState) { state ->
+            when (state) {
+                is MapsUiState.OnSuccessGetStories -> {
+                    showStoriesLocationMarker(state.stories)
+                }
+
+                is MapsUiState.OnErrorGetStories -> {
+                    showToast(this@MapsActivity, state.errorMessage)
+                    showStoriesLocationMarker(listOf())
+                }
+
+                else -> {
+                    // no op
+                }
+            }
         }
     }
 

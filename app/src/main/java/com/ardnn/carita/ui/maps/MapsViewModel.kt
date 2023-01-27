@@ -1,44 +1,36 @@
 package com.ardnn.carita.ui.maps
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.ardnn.carita.data.main.repository.source.remote.response.StoryResponse
-import com.ardnn.carita.domain.maps.interactor.GetStoriesWithLocationUseCase
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
-import timber.log.Timber
+import androidx.lifecycle.viewModelScope
+import com.ardnn.carita.domain.maps.interactor.GetStoriesWithLocation
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 class MapsViewModel @Inject constructor(
-    private val getStoriesWithLocationUseCase: GetStoriesWithLocationUseCase
+    private val getStoriesWithLocation: GetStoriesWithLocation
 ) : ViewModel() {
 
-    private val disposables = CompositeDisposable()
+    private val _uiState = MutableStateFlow<MapsUiState>(MapsUiState.None)
+    val uiState = _uiState.asStateFlow()
 
-    private val _stories = MutableLiveData<List<StoryResponse>>()
-    val stories: LiveData<List<StoryResponse>> get() = _stories
     fun getStories(token: String) {
-        disposables.add(
-            getStoriesWithLocationUseCase.execute("Bearer $token")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    { storiesResponse ->
-                        storiesResponse.listStory?.let {
-                            _stories.value = it
-                        }
-                    },
-                    {
-                        _stories.value = listOf()
-                        Timber.e(it.localizedMessage)
+        getStoriesWithLocation.execute(
+            params = GetStoriesWithLocation.Params("Bearer $token"),
+            onSuccess = { response ->
+                response.listStory?.let { stories ->
+                    _uiState.update {
+                        MapsUiState.OnSuccessGetStories(stories)
                     }
-                )
+                }
+            },
+            onError = { throwable ->
+                _uiState.update {
+                    MapsUiState.OnErrorGetStories(throwable.message.toString())
+                }
+            },
+            coroutineScope = viewModelScope
         )
-    }
-
-    override fun onCleared() {
-        disposables.clear()
     }
 }
