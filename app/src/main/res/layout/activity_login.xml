@@ -14,19 +14,6 @@
         android:paddingBottom="32dp"
         android:clipToPadding="false">
 
-        <include
-            layout="@layout/layout_loading"
-            android:id="@+id/loading"
-            android:visibility="invisible"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginBottom="-32dp"
-            android:elevation="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <ImageView
             android:id="@+id/image_view"
             android:layout_width="0dp"
@@ -146,6 +133,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView"
             app:layout_constraintTop_toTopOf="@+id/textView" />
+
+        <include
+            layout="@layout/layout_loading"
+            android:id="@+id/loading"
+            android:visibility="invisible"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="-32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidelineHorizontal2"

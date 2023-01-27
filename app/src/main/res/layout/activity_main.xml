@@ -78,13 +78,6 @@
 
         </androidx.core.widget.NestedScrollView>
 
-        <include
-            layout="@layout/layout_loading"
-            android:id="@+id/loading"
-            android:visibility="invisible"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
     </FrameLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -114,5 +107,12 @@
         app:tint="@color/white_smoke"
         android:src="@drawable/ic_map"
         android:contentDescription="@string/desc_fab_add_story" />
+
+    <include
+        layout="@layout/layout_loading"
+        android:id="@+id/loading"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
