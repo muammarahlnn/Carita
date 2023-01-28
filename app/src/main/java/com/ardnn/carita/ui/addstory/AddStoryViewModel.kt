@@ -18,12 +18,11 @@ class AddStoryViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     fun postStory(
-        token: String,
         file: MultipartBody.Part,
         description: RequestBody
     ) {
         postStory.execute(
-            params = PostStory.Params("Bearer $token", file, description),
+            params = PostStory.Params(file, description),
             onStart = {
                 _uiState.update {
                     AddStoryUiState.Loading(true)

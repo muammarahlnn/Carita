@@ -82,14 +82,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupAction() {
         binding.fabAddStory.setOnClickListener {
-            AddStoryFragment.newInstance(user.token, createAddStoryEventListener())
+            AddStoryFragment.newInstance(createAddStoryEventListener())
                 .show(supportFragmentManager, "")
         }
         binding.fabMap.setOnClickListener {
-            startActivity(
-                Intent(this, MapsActivity::class.java)
-                    .putExtra(MapsActivity.EXTRA_USER, user)
-            )
+            startActivity(Intent(this, MapsActivity::class.java))
         }
     }
 
@@ -196,7 +193,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getStories() {
-        viewModel.getStories(user.token)
+        viewModel.getStories()
     }
 
     private fun showLoading() {

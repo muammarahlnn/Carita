@@ -5,7 +5,6 @@ import com.ardnn.carita.data.maps.repository.source.MapsDataFactory
 import com.ardnn.carita.data.maps.repository.source.MapsDataSource
 import com.ardnn.carita.data.util.Source
 import com.ardnn.carita.domain.maps.repository.MapsRepository
-import io.reactivex.Observable
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -17,6 +16,6 @@ class MapsRepositoryImpl @Inject constructor(
         mapsDataFactory.createData(Source.REMOTE)
     }
 
-    override fun getStories(token: String): Flow<StoriesResponse> =
-        remoteMapsDataSource.getStories(token)
+    override fun getStories(): Flow<StoriesResponse> =
+        remoteMapsDataSource.getStories()
 }

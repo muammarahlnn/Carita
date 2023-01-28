@@ -5,5 +5,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface MapsDataSource {
 
-    fun getStories(token: String): Flow<StoriesResponse>
+    fun getStories(): Flow<StoriesResponse>
 }

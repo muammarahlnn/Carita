@@ -19,10 +19,9 @@ class GetStories @Inject constructor(
 ) : BaseUseCase<GetStories.Params, PagingData<StoryResponse>>() {
 
     override fun buildUseCase(params: Params): Flow<PagingData<StoryResponse>> =
-        mainRepository.getStories(params.token).cachedIn(params.coroutineScope)
+        mainRepository.getStories().cachedIn(params.coroutineScope)
 
     class Params(
-        internal val token: String,
         internal val coroutineScope: CoroutineScope
     )
 }

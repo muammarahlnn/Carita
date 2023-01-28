@@ -19,14 +19,12 @@ class PostStory @Inject constructor(
 
     override fun buildUseCase(params: Params): Flow<AddStoryResponse> {
         return addStoryRepository.postStory(
-            params.token,
             params.file,
             params.description
         )
     }
 
     class Params(
-        internal val token: String,
         internal val file: MultipartBody.Part,
         internal val description: RequestBody
     )

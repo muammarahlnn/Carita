@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.ardnn.carita.CaritaApplication
 import com.ardnn.carita.R
-import com.ardnn.carita.data.main.repository.source.local.model.User
 import com.ardnn.carita.data.main.repository.source.remote.response.StoryResponse
 import com.ardnn.carita.databinding.ActivityMapsBinding
 import com.ardnn.carita.ui.util.ViewModelFactory
@@ -35,11 +34,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         viewModelFactory
     }
 
-    private lateinit var map: GoogleMap
-
     private lateinit var binding: ActivityMapsBinding
 
-    private lateinit var user: User
+    private lateinit var map: GoogleMap
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
@@ -70,7 +67,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupBundle()
         setupMaps()
         executeInitialUseCases()
         initLifecycleUiState()
@@ -78,10 +74,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun setupInject() {
         (application as CaritaApplication).applicationComponent.inject(this)
-    }
-
-    private fun setupBundle() {
-        user = intent.getParcelableExtra<User>(EXTRA_USER) as User
     }
 
     private fun setupMaps() {
@@ -93,7 +85,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun executeInitialUseCases() {
-        viewModel.getStories(user.token)
+        viewModel.getStories()
     }
 
     private fun initLifecycleUiState() {
@@ -168,10 +160,5 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 )
             }
         }
-    }
-
-    companion object {
-
-        const val EXTRA_USER = "extra_user"
     }
 }

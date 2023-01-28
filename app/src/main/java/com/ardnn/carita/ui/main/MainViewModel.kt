@@ -95,12 +95,9 @@ class MainViewModel @Inject constructor(
         )
     }
 
-    fun getStories(token: String) {
+    fun getStories() {
         getStories.execute(
-            params = GetStories.Params(
-                "Bearer $token",
-                viewModelScope
-            ),
+            params = GetStories.Params(viewModelScope),
             onStart = {
                 _uiState.update {
                     MainUiState.Loading(true)

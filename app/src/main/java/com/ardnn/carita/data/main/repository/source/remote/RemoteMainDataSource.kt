@@ -21,11 +21,11 @@ class RemoteMainDataSource @Inject constructor(
         throw UnsupportedOperationException("No implementation on remote data")
     }
 
-    override fun getStories(token: String): Flow<PagingData<StoryResponse>> {
+    override fun getStories(): Flow<PagingData<StoryResponse>> {
         return Pager(
             config = PagingConfig(pageSize = 5),
             pagingSourceFactory = {
-                StoryPagingSource(api, token)
+                StoryPagingSource(api)
             }
         ).flow
     }

@@ -5,5 +5,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface MapsRepository {
 
-    fun getStories(token: String): Flow<StoriesResponse>
+    fun getStories(): Flow<StoriesResponse>
 }

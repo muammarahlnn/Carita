@@ -46,8 +46,6 @@ class AddStoryFragment : BottomSheetDialogFragment() {
 
     private var file: File? = null
 
-    private var token = ""
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         (requireActivity().application as CaritaApplication).applicationComponent.inject(this)
@@ -72,7 +70,6 @@ class AddStoryFragment : BottomSheetDialogFragment() {
                 )
             }
             initLifecycleUiState()
-            setupBundle()
             setupActions()
         }
     }
@@ -110,12 +107,6 @@ class AddStoryFragment : BottomSheetDialogFragment() {
                     // no op
                 }
             }
-        }
-    }
-
-    private fun setupBundle() {
-        arguments?.let {
-            token = it.getString(EXTRA_TOKEN, "")
         }
     }
 
@@ -207,7 +198,7 @@ class AddStoryFragment : BottomSheetDialogFragment() {
                 file.name,
                 requestImageFile
             )
-            viewModel.postStory(token, imageMultipart, description)
+            viewModel.postStory(imageMultipart, description)
         } else {
             showToast(context as Context, "Please take an image first")
         }
@@ -215,23 +206,15 @@ class AddStoryFragment : BottomSheetDialogFragment() {
 
     companion object {
 
-        private const val EXTRA_TOKEN = "extra_token"
         const val EXTRA_PICTURE = "extra_picture"
         const val EXTRA_IS_BACK_CAMERA = "extra_is_back_camera"
         const val CAMERA_X_RESULT = 200
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
         private const val REQUEST_CODE_PERMISSIONS = 10
 
-        fun newInstance(
-            token: String,
-            addStoryEventListener: AddStoryEventListener
-        ): AddStoryFragment {
+        fun newInstance(addStoryEventListener: AddStoryEventListener): AddStoryFragment {
             return AddStoryFragment().apply {
-                arguments = Bundle().apply {
-                    putString(EXTRA_TOKEN, token)
-                }
-            }.also {
-                it.addStoryEventListener = addStoryEventListener
+                this.addStoryEventListener = addStoryEventListener
             }
         }
     }

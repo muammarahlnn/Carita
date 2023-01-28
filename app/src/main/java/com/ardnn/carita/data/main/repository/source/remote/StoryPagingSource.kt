@@ -11,13 +11,12 @@ import com.ardnn.carita.data.main.repository.source.remote.response.StoryRespons
  */
 class StoryPagingSource(
     private val api: StoryDicodingApi,
-    private val token: String
 ) : PagingSource<Int, StoryResponse>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, StoryResponse> {
         return try {
             val position = params.key ?: INITIAL_PAGE_INDEX
-            val stories = api.getStories(token, position, params.loadSize).listStory
+            val stories = api.getStories(position, params.loadSize).listStory
             LoadResult.Page(
                 data = stories ?: listOf(),
                 prevKey = if (position == INITIAL_PAGE_INDEX) null else position - 1,

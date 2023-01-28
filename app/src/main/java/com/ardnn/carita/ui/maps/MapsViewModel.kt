@@ -2,6 +2,7 @@ package com.ardnn.carita.ui.maps
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ardnn.carita.domain.base.NoParams
 import com.ardnn.carita.domain.maps.interactor.GetStoriesWithLocation
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,9 +16,9 @@ class MapsViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<MapsUiState>(MapsUiState.None)
     val uiState = _uiState.asStateFlow()
 
-    fun getStories(token: String) {
+    fun getStories() {
         getStoriesWithLocation.execute(
-            params = GetStoriesWithLocation.Params("Bearer $token"),
+            params = NoParams,
             onSuccess = { response ->
                 response.listStory?.let { stories ->
                     _uiState.update {

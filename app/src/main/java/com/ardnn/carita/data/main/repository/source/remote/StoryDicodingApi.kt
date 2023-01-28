@@ -24,7 +24,6 @@ interface StoryDicodingApi {
 
     @GET(STORIES)
     suspend fun getStories(
-        @Header(AUTHORIZATION) token: String,
         @Query(PAGE) page: Int,
         @Query(SIZE) size: Int,
         @Query(LOCATION) location: Int = 0
@@ -33,7 +32,6 @@ interface StoryDicodingApi {
     @Multipart
     @POST(STORIES)
     suspend fun postStory(
-        @Header(AUTHORIZATION) token: String,
         @Part file: MultipartBody.Part,
         @Part(DESCRIPTION) description: RequestBody
     ): AddStoryResponse
@@ -43,7 +41,6 @@ interface StoryDicodingApi {
         private const val REGISTER = "v1/register"
         private const val LOGIN = "v1/login"
         private const val STORIES = "v1/stories"
-        private const val AUTHORIZATION = "Authorization"
         private const val DESCRIPTION = "description"
         private const val PAGE = "page"
         private const val SIZE = "size"

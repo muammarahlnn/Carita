@@ -8,7 +8,6 @@ import okhttp3.RequestBody
 interface AddStoryDataSource {
 
     fun postStory(
-        token: String,
         file: MultipartBody.Part,
         description: RequestBody
     ): Flow<AddStoryResponse>

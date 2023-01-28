@@ -2,6 +2,7 @@ package com.ardnn.carita.domain.maps.interactor
 
 import com.ardnn.carita.data.main.repository.source.remote.response.StoriesResponse
 import com.ardnn.carita.domain.base.BaseUseCase
+import com.ardnn.carita.domain.base.NoParams
 import com.ardnn.carita.domain.maps.repository.MapsRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -13,13 +14,9 @@ import javax.inject.Inject
  */
 class GetStoriesWithLocation @Inject constructor(
     private val mapsRepository: MapsRepository
-) : BaseUseCase<GetStoriesWithLocation.Params, StoriesResponse>(){
+) : BaseUseCase<NoParams, StoriesResponse>(){
 
-    override fun buildUseCase(params: Params): Flow<StoriesResponse> {
-        return mapsRepository.getStories(params.token)
+    override fun buildUseCase(params: NoParams): Flow<StoriesResponse> {
+        return mapsRepository.getStories()
     }
-
-    class Params(
-        internal val token: String
-    )
 }

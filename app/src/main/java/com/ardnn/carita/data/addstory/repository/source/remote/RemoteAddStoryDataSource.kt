@@ -3,7 +3,6 @@ package com.ardnn.carita.data.addstory.repository.source.remote
 import com.ardnn.carita.data.addstory.repository.source.AddStoryDataSource
 import com.ardnn.carita.data.addstory.repository.source.remote.response.AddStoryResponse
 import com.ardnn.carita.data.main.repository.source.remote.StoryDicodingApi
-import io.reactivex.Observable
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okhttp3.MultipartBody
@@ -15,12 +14,11 @@ class RemoteAddStoryDataSource @Inject constructor(
 ) : AddStoryDataSource {
 
     override fun postStory(
-        token: String,
         file: MultipartBody.Part,
         description: RequestBody
     ): Flow<AddStoryResponse> {
         return flow {
-            emit(api.postStory(token, file, description))
+            emit(api.postStory(file, description))
         }
     }
 }

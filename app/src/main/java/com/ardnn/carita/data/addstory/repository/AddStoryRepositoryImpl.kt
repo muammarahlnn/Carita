@@ -19,8 +19,7 @@ class AddStoryRepositoryImpl @Inject constructor(
     }
 
     override fun postStory(
-        token: String,
         file: MultipartBody.Part,
         description: RequestBody
-    ): Flow<AddStoryResponse> = remoteAddStoryDataSource.postStory(token, file, description)
+    ): Flow<AddStoryResponse> = remoteAddStoryDataSource.postStory(file, description)
 }

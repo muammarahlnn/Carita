@@ -17,7 +17,7 @@ class LocalMainDataSource @Inject constructor(
     override fun getUser(): Flow<User> =
         mainPreferences.getUser()
 
-    override fun getStories(token: String): Flow<PagingData<StoryResponse>> {
+    override fun getStories(): Flow<PagingData<StoryResponse>> {
         throw UnsupportedOperationException("No implementation on local data")
     }
 

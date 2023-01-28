@@ -1,8 +1,10 @@
 package com.ardnn.carita.data.di
 
 import com.ardnn.carita.BuildConfig
+import com.ardnn.carita.data.main.repository.source.local.MainPreferences
 import com.ardnn.carita.data.main.repository.source.remote.StoryDicodingApi
 import com.ardnn.carita.data.util.ApiConst
+import com.ardnn.carita.data.util.AuthorizationInterceptor
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -20,14 +22,16 @@ class RemoteModule {
         buildRetrofit(client).create(StoryDicodingApi::class.java)
 
     @Provides
-    fun provideOkhttpClient(): OkHttpClient =
+    fun provideOkhttpClient(mainPreferences: MainPreferences): OkHttpClient =
         OkHttpClient.Builder()
+            .addInterceptor(AuthorizationInterceptor(mainPreferences))
             .addInterceptor(
                 HttpLoggingInterceptor()
                     .setLevel(
                         if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
-                        else HttpLoggingInterceptor.Level.NONE)
+                        else HttpLoggingInterceptor.Level.NONE
                     )
+            )
             .connectTimeout(120, TimeUnit.SECONDS)
             .readTimeout(120, TimeUnit.SECONDS)
             .build()
