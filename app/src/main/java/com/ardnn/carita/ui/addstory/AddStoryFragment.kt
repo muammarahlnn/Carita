@@ -8,6 +8,7 @@ import android.content.Intent.ACTION_GET_CONTENT
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,6 +28,7 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
+import java.io.Serializable
 import javax.inject.Inject
 
 class AddStoryFragment : BottomSheetDialogFragment() {
@@ -169,12 +171,12 @@ class AddStoryFragment : BottomSheetDialogFragment() {
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == CAMERA_X_RESULT) {
-            val myFile = result.data?.getSerializableExtra(EXTRA_PICTURE) as File
+            val myFile = result.data?.serializable<File>(EXTRA_PICTURE)
             val isBackCamera = result.data?.getBooleanExtra(EXTRA_IS_BACK_CAMERA, true) as Boolean
 
             file = myFile
 
-            val selectedImage = rotateBitmap(BitmapFactory.decodeFile(myFile.path), isBackCamera)
+            val selectedImage = rotateBitmap(BitmapFactory.decodeFile(myFile?.path), isBackCamera)
             binding?.ivImage?.setImageBitmap(selectedImage)
         }
     }
@@ -203,6 +205,12 @@ class AddStoryFragment : BottomSheetDialogFragment() {
             showToast(context as Context, "Please take an image first")
         }
     }
+
+    private inline fun <reified T: Serializable> Intent.serializable(key: String): T? =
+        when {
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> getSerializableExtra(key, T::class.java)
+            else -> @Suppress("DEPRECATION") getSerializableExtra(key) as T?
+        }
 
     companion object {
 
