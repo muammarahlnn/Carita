@@ -32,17 +32,22 @@
                 android:background="@color/white_smoke"
                 android:paddingBottom="32dp">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_story"
+                <com.skydoves.androidveil.VeilRecyclerFrameView
+                    android:id="@+id/vrv_story"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:nestedScrollingEnabled="false"
+                    app:veilFrame_layout="@layout/item_story"
+                    app:veilFrame_veiled="true"
+                    app:veilFrame_shimmerEnable="true"
+                    app:veilFrame_baseColor="@color/shimmer_base"
+                    app:veilFrame_highlightColor="@color/shimmer_highlight"
+                    app:veilFrame_baseAlpha="0.75"
+                    app:veilFrame_highlightAlpha="1.0"
                     app:layout_constraintEnd_toStartOf="@+id/guideline_end"
                     app:layout_constraintStart_toStartOf="@+id/guideline_start"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:itemCount="5"
-                    tools:listitem="@layout/item_story" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/tv_no_connection"

@@ -97,9 +97,14 @@ class MainActivity : AppCompatActivity() {
     private fun initLifecycleUiState() {
         collectLifecycleFlow(viewModel.uiState) { state ->
             when (state) {
-                is MainUiState.Loading -> {
-                    if (state.isLoading) showLoading()
-                    else hideLoading()
+                is MainUiState.LoadingShimmer -> {
+                    if (state.isLoading) showShimmer()
+                    else hideShimmer()
+                }
+
+                is MainUiState.LoadingProgressBar -> {
+                    if (state.isLoading) showProgressBar()
+                    else hideProgressBar()
                 }
 
                 is MainUiState.Error -> {
@@ -164,8 +169,8 @@ class MainActivity : AppCompatActivity() {
         }.apply {
             addLoadStateListener { loadState ->
                 when (loadState.source.refresh) {
-                    is LoadState.Loading -> showLoading()
-                    is LoadState.NotLoading -> hideLoading()
+                    is LoadState.Loading -> showShimmer()
+                    is LoadState.NotLoading -> hideShimmer()
                     is LoadState.Error -> showError()
                 }
             }
@@ -173,17 +178,20 @@ class MainActivity : AppCompatActivity() {
             enablingMapsButton()
         }
 
-        binding.rvStory.apply {
-            this.adapter = adapter.withLoadStateFooter(
+        binding.vrvStory.apply {
+            setAdapter(adapter.withLoadStateFooter(
                 footer = LoadingStateAdapter {
                     adapter.retry()
                 }
+            ))
+            setLayoutManager(
+                LinearLayoutManager(
+                    this@MainActivity,
+                    LinearLayoutManager.VERTICAL,
+                    false
+                )
             )
-            layoutManager = LinearLayoutManager(
-                this@MainActivity,
-                LinearLayoutManager.VERTICAL,
-                false
-            )
+            addVeiledItems(10)
         }
     }
 
@@ -196,11 +204,19 @@ class MainActivity : AppCompatActivity() {
         viewModel.getStories()
     }
 
-    private fun showLoading() {
+    private fun showShimmer() {
+        binding.vrvStory.veil()
+    }
+
+    private fun hideShimmer() {
+        binding.vrvStory.unVeil()
+    }
+
+    private fun showProgressBar() {
         binding.loading.root.visibility = View.VISIBLE
     }
 
-    private fun hideLoading() {
+    private fun hideProgressBar() {
         binding.loading.root.visibility = View.INVISIBLE
     }
 

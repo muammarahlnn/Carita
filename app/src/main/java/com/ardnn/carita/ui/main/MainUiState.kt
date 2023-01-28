@@ -14,7 +14,9 @@ sealed class MainUiState {
     
     object None : MainUiState()
 
-    class Loading(val isLoading: Boolean) : MainUiState()
+    class LoadingShimmer(val isLoading: Boolean) : MainUiState()
+
+    class LoadingProgressBar(val isLoading: Boolean) : MainUiState()
 
     class Error(@StringRes val stringId: Int) : MainUiState()
 

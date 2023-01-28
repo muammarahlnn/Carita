@@ -72,7 +72,7 @@ class MainViewModel @Inject constructor(
             params = NoParams,
             onStart = {
                 _uiState.update {
-                    MainUiState.Loading(true)
+                    MainUiState.LoadingProgressBar(true)
                 }
             },
             onSuccess = {
@@ -88,7 +88,7 @@ class MainViewModel @Inject constructor(
             },
             onCompletion = {
                 _uiState.update {
-                    MainUiState.Loading(false)
+                    MainUiState.LoadingProgressBar(false)
                 }
             },
             coroutineScope = viewModelScope
@@ -100,7 +100,7 @@ class MainViewModel @Inject constructor(
             params = GetStories.Params(viewModelScope),
             onStart = {
                 _uiState.update {
-                    MainUiState.Loading(true)
+                    MainUiState.LoadingShimmer(true)
                 }
             },
             onSuccess = { stories ->
@@ -116,7 +116,7 @@ class MainViewModel @Inject constructor(
             },
             onCompletion = {
               _uiState.update {
-                  MainUiState.Loading(false)
+                  MainUiState.LoadingShimmer(false)
               }
             },
             coroutineScope = viewModelScope
